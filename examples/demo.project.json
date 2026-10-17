@@ -1,0 +1,2341 @@
+{
+  "diagnostics": [],
+  "edges": [
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:1",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "file:backend/app.py",
+      "status": "indexed",
+      "target": "import:69f1aef03fa87afd40ee2bd55f93430d"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:2",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "file:backend/app.py",
+      "status": "indexed",
+      "target": "variable:e61730ef3d6eb11c1552dadc12ae0e44"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:3",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "file:backend/app.py",
+      "status": "indexed",
+      "target": "class:ba305673246132fa20a9d73dde3a1584"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:4",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "class:ba305673246132fa20a9d73dde3a1584",
+      "status": "indexed",
+      "target": "method:2edccf48c81e5d9933d2e8ea5fe65dc4"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:5",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "class:ba305673246132fa20a9d73dde3a1584",
+      "status": "indexed",
+      "target": "method:2e49ad74f045d140fd6948624f052415"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:6",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "class:ba305673246132fa20a9d73dde3a1584",
+      "status": "indexed",
+      "target": "method:8043208ac0e0e880c455fada21c89cf8"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:7",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "file:backend/app.py",
+      "status": "indexed",
+      "target": "class:939a237202f7b67378ce97bf6c21ba29"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:8",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "class:939a237202f7b67378ce97bf6c21ba29",
+      "status": "indexed",
+      "target": "method:06f7debe05b092e81e35797575b6028a"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:9",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "class:939a237202f7b67378ce97bf6c21ba29",
+      "status": "indexed",
+      "target": "method:d3704e85d22c6a1aa46e110e24bea130"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:10",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "method:d3704e85d22c6a1aa46e110e24bea130",
+      "status": "indexed",
+      "target": "function:548a51f250b7c7a467099ac3d5fb20b6"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:11",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "file:backend/app.py",
+      "status": "indexed",
+      "target": "function:c6e2a06077d7073c67ffb94e4d13d616"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:12",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "file:backend/app.py",
+      "status": "indexed",
+      "target": "function:d6829bb54eb19da7ce896093ca460682"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:13",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "file:backend/app.py",
+      "status": "indexed",
+      "target": "function:49fd2a45e38852a836748f7ebbee64fa"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:14",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "file:backend/app.py",
+      "status": "indexed",
+      "target": "function:e289236f8b3bd512a6e6841c35115fce"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:15",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "file:backend/app.py",
+      "status": "indexed",
+      "target": "variable:8ee8c9b04a876ac17292a7093abe4124"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:16",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "file:backend/app.py",
+      "status": "indexed",
+      "target": "variable:43bac05c2c18da266b88bdad2433b341"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:17",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "file:frontend/App.tsx",
+      "status": "indexed",
+      "target": "type_alias:f79de9f2ea877897bbd91e07cb1d7bf2"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:18",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "type_alias:f79de9f2ea877897bbd91e07cb1d7bf2",
+      "status": "indexed",
+      "target": "property:8f92e35192cedbcaf1cc3a3e2df27a8f"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:19",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "type_alias:f79de9f2ea877897bbd91e07cb1d7bf2",
+      "status": "indexed",
+      "target": "property:bafe780d5e447c8b4d33ec772d7a1e42"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:20",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "file:frontend/App.tsx",
+      "status": "indexed",
+      "target": "function:d903252d6f73ff154fb98d1429196269"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:21",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "file:frontend/App.tsx",
+      "status": "indexed",
+      "target": "function:0c84770db9f030ee25555a0cd23bf2ab"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:22",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "file:frontend/App.tsx",
+      "status": "indexed",
+      "target": "function:f1c3cd424a39fe114c342d63aec71816"
+    },
+    {
+      "column": null,
+      "detail": null,
+      "id": "cg:23",
+      "kind": "contains",
+      "line": null,
+      "origin": "codegraph",
+      "source": "file:frontend/App.tsx",
+      "status": "indexed",
+      "target": "function:e39f4977f91a22f18fad88ec031476b0"
+    },
+    {
+      "column": 20,
+      "detail": null,
+      "id": "cg:24",
+      "kind": "calls",
+      "line": 9,
+      "origin": "codegraph",
+      "source": "method:2edccf48c81e5d9933d2e8ea5fe65dc4",
+      "status": "indexed",
+      "target": "method:2e49ad74f045d140fd6948624f052415"
+    },
+    {
+      "column": 12,
+      "detail": null,
+      "id": "cg:25",
+      "kind": "calls",
+      "line": 13,
+      "origin": "codegraph",
+      "source": "method:2edccf48c81e5d9933d2e8ea5fe65dc4",
+      "status": "indexed",
+      "target": "method:8043208ac0e0e880c455fada21c89cf8"
+    },
+    {
+      "column": 8,
+      "detail": null,
+      "id": "cg:26",
+      "kind": "calls",
+      "line": 22,
+      "origin": "codegraph",
+      "source": "method:8043208ac0e0e880c455fada21c89cf8",
+      "status": "indexed",
+      "target": "function:d6829bb54eb19da7ce896093ca460682"
+    },
+    {
+      "column": 8,
+      "detail": null,
+      "id": "cg:27",
+      "kind": "calls",
+      "line": 27,
+      "origin": "codegraph",
+      "source": "method:06f7debe05b092e81e35797575b6028a",
+      "status": "indexed",
+      "target": "function:c6e2a06077d7073c67ffb94e4d13d616"
+    },
+    {
+      "column": 26,
+      "detail": null,
+      "id": "cg:28",
+      "kind": "calls",
+      "line": 29,
+      "origin": "codegraph",
+      "source": "method:06f7debe05b092e81e35797575b6028a",
+      "status": "indexed",
+      "target": "method:2edccf48c81e5d9933d2e8ea5fe65dc4"
+    },
+    {
+      "column": 19,
+      "detail": null,
+      "id": "cg:29",
+      "kind": "calls",
+      "line": 30,
+      "origin": "codegraph",
+      "source": "method:06f7debe05b092e81e35797575b6028a",
+      "status": "indexed",
+      "target": "method:d3704e85d22c6a1aa46e110e24bea130"
+    },
+    {
+      "column": 12,
+      "detail": null,
+      "id": "cg:30",
+      "kind": "calls",
+      "line": 34,
+      "origin": "codegraph",
+      "source": "method:06f7debe05b092e81e35797575b6028a",
+      "status": "indexed",
+      "target": "function:d6829bb54eb19da7ce896093ca460682"
+    },
+    {
+      "column": 22,
+      "detail": null,
+      "id": "cg:31",
+      "kind": "calls",
+      "line": 40,
+      "origin": "codegraph",
+      "source": "method:d3704e85d22c6a1aa46e110e24bea130",
+      "status": "indexed",
+      "target": "function:548a51f250b7c7a467099ac3d5fb20b6"
+    },
+    {
+      "column": 11,
+      "detail": null,
+      "id": "cg:32",
+      "kind": "calls",
+      "line": 56,
+      "origin": "codegraph",
+      "source": "function:49fd2a45e38852a836748f7ebbee64fa",
+      "status": "indexed",
+      "target": "method:06f7debe05b092e81e35797575b6028a"
+    },
+    {
+      "column": 25,
+      "detail": null,
+      "id": "cg:33",
+      "kind": "calls",
+      "line": 61,
+      "origin": "codegraph",
+      "source": "function:e289236f8b3bd512a6e6841c35115fce",
+      "status": "indexed",
+      "target": "method:2e49ad74f045d140fd6948624f052415"
+    },
+    {
+      "column": 4,
+      "detail": null,
+      "id": "cg:34",
+      "kind": "calls",
+      "line": 10,
+      "origin": "codegraph",
+      "source": "function:d903252d6f73ff154fb98d1429196269",
+      "status": "indexed",
+      "target": "function:0c84770db9f030ee25555a0cd23bf2ab"
+    },
+    {
+      "column": 33,
+      "detail": null,
+      "id": "cg:35",
+      "kind": "references",
+      "line": 25,
+      "origin": "codegraph",
+      "source": "function:e39f4977f91a22f18fad88ec031476b0",
+      "status": "indexed",
+      "target": "type_alias:f79de9f2ea877897bbd91e07cb1d7bf2"
+    },
+    {
+      "column": 25,
+      "detail": null,
+      "id": "cg:36",
+      "kind": "calls",
+      "line": 26,
+      "origin": "codegraph",
+      "source": "function:e39f4977f91a22f18fad88ec031476b0",
+      "status": "indexed",
+      "target": "function:d903252d6f73ff154fb98d1429196269"
+    }
+  ],
+  "entries": [
+    {
+      "id": "function:49fd2a45e38852a836748f7ebbee64fa",
+      "kind": "api",
+      "label": "POST /api/orders"
+    },
+    {
+      "id": "function:e289236f8b3bd512a6e6841c35115fce",
+      "kind": "api",
+      "label": "GET /api/stock/{sku}"
+    },
+    {
+      "id": "ast:frontend/App.tsx:26:19:onSubmit",
+      "kind": "function",
+      "label": "OrderPage.onSubmit"
+    },
+    {
+      "id": "function:0c84770db9f030ee25555a0cd23bf2ab",
+      "kind": "function",
+      "label": "showError"
+    },
+    {
+      "id": "function:49fd2a45e38852a836748f7ebbee64fa",
+      "kind": "function",
+      "label": "create_order"
+    },
+    {
+      "id": "function:548a51f250b7c7a467099ac3d5fb20b6",
+      "kind": "function",
+      "label": "OrderService.persist.build_id"
+    },
+    {
+      "id": "function:c6e2a06077d7073c67ffb94e4d13d616",
+      "kind": "function",
+      "label": "validate_quantity"
+    },
+    {
+      "id": "function:d6829bb54eb19da7ce896093ca460682",
+      "kind": "function",
+      "label": "audit"
+    },
+    {
+      "id": "function:d903252d6f73ff154fb98d1429196269",
+      "kind": "function",
+      "label": "submitOrder"
+    },
+    {
+      "id": "function:e289236f8b3bd512a6e6841c35115fce",
+      "kind": "function",
+      "label": "read_stock"
+    },
+    {
+      "id": "function:e39f4977f91a22f18fad88ec031476b0",
+      "kind": "frontend",
+      "label": "OrderPage"
+    },
+    {
+      "id": "function:f1c3cd424a39fe114c342d63aec71816",
+      "kind": "function",
+      "label": "loadStock"
+    },
+    {
+      "id": "method:06f7debe05b092e81e35797575b6028a",
+      "kind": "function",
+      "label": "OrderService.create"
+    },
+    {
+      "id": "method:2e49ad74f045d140fd6948624f052415",
+      "kind": "function",
+      "label": "Inventory.lookup"
+    },
+    {
+      "id": "method:2edccf48c81e5d9933d2e8ea5fe65dc4",
+      "kind": "function",
+      "label": "Inventory.reserve"
+    },
+    {
+      "id": "method:8043208ac0e0e880c455fada21c89cf8",
+      "kind": "function",
+      "label": "Inventory.mark_reserved"
+    },
+    {
+      "id": "method:d3704e85d22c6a1aa46e110e24bea130",
+      "kind": "function",
+      "label": "OrderService.persist"
+    }
+  ],
+  "flows": {
+    "ast:frontend/App.tsx:26:19:onSubmit": [
+      {
+        "arms": null,
+        "column": 25,
+        "handlers": null,
+        "http": null,
+        "id": "ast:frontend/App.tsx:26:19:onSubmit:26:25:1",
+        "kind": "call",
+        "line": 26,
+        "name": "submitOrder",
+        "resolution": "candidate",
+        "siteColumn": 25,
+        "siteLine": 26,
+        "targets": [
+          {
+            "id": "function:d903252d6f73ff154fb98d1429196269",
+            "origin": "name-candidate",
+            "status": "candidate"
+          }
+        ],
+        "text": "submitOrder(props.sku, props.quantity)"
+      },
+      {
+        "arms": null,
+        "column": 0,
+        "handlers": null,
+        "http": null,
+        "id": "ast:frontend/App.tsx:26:19:onSubmit:26:0:2",
+        "kind": "ret",
+        "line": 26,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "return submitOrder(props.sku, props.quantity)"
+      }
+    ],
+    "file:backend/app.py": [
+      {
+        "arms": null,
+        "column": 0,
+        "handlers": null,
+        "http": null,
+        "id": "file:backend/app.py:1:0:3",
+        "kind": "stmt",
+        "line": 1,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "'Static teaching fixture. Scanning does not import FastAPI or run this file.'"
+      },
+      {
+        "arms": null,
+        "column": 6,
+        "handlers": null,
+        "http": null,
+        "id": "file:backend/app.py:4:6:4",
+        "kind": "call",
+        "line": 4,
+        "name": "FastAPI",
+        "resolution": "unresolved",
+        "siteColumn": 6,
+        "siteLine": 4,
+        "targets": [],
+        "text": "FastAPI()"
+      },
+      {
+        "arms": null,
+        "column": 0,
+        "handlers": null,
+        "http": null,
+        "id": "file:backend/app.py:4:0:5",
+        "kind": "stmt",
+        "line": 4,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "app = FastAPI()"
+      },
+      {
+        "arms": null,
+        "column": 12,
+        "handlers": null,
+        "http": null,
+        "id": "file:backend/app.py:64:12:6",
+        "kind": "call",
+        "line": 64,
+        "name": "Inventory",
+        "resolution": "unresolved",
+        "siteColumn": 12,
+        "siteLine": 64,
+        "targets": [],
+        "text": "Inventory()"
+      },
+      {
+        "arms": null,
+        "column": 0,
+        "handlers": null,
+        "http": null,
+        "id": "file:backend/app.py:64:0:7",
+        "kind": "stmt",
+        "line": 64,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "inventory = Inventory()"
+      },
+      {
+        "arms": null,
+        "column": 9,
+        "handlers": null,
+        "http": null,
+        "id": "file:backend/app.py:65:9:8",
+        "kind": "call",
+        "line": 65,
+        "name": "OrderService",
+        "resolution": "unresolved",
+        "siteColumn": 9,
+        "siteLine": 65,
+        "targets": [],
+        "text": "OrderService()"
+      },
+      {
+        "arms": null,
+        "column": 0,
+        "handlers": null,
+        "http": null,
+        "id": "file:backend/app.py:65:0:9",
+        "kind": "stmt",
+        "line": 65,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "orders = OrderService()"
+      }
+    ],
+    "file:frontend/App.tsx": [],
+    "function:0c84770db9f030ee25555a0cd23bf2ab": [
+      {
+        "arms": null,
+        "column": 2,
+        "handlers": null,
+        "http": null,
+        "id": "function:0c84770db9f030ee25555a0cd23bf2ab:17:2:10",
+        "kind": "call",
+        "line": 17,
+        "name": "console.error",
+        "resolution": "unresolved",
+        "siteColumn": 10,
+        "siteLine": 17,
+        "targets": [],
+        "text": "console.error(message)"
+      },
+      {
+        "arms": null,
+        "column": 0,
+        "handlers": null,
+        "http": null,
+        "id": "function:0c84770db9f030ee25555a0cd23bf2ab:17:0:11",
+        "kind": "stmt",
+        "line": 17,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "console.error(message)"
+      }
+    ],
+    "function:49fd2a45e38852a836748f7ebbee64fa": [
+      {
+        "arms": null,
+        "column": 11,
+        "handlers": null,
+        "http": null,
+        "id": "function:49fd2a45e38852a836748f7ebbee64fa:56:11:12",
+        "kind": "call",
+        "line": 56,
+        "name": "orders.create",
+        "resolution": "indexed",
+        "siteColumn": 18,
+        "siteLine": 56,
+        "targets": [
+          {
+            "id": "method:06f7debe05b092e81e35797575b6028a",
+            "origin": "codegraph",
+            "status": "indexed"
+          }
+        ],
+        "text": "orders.create(sku, quantity)"
+      },
+      {
+        "arms": null,
+        "column": 4,
+        "handlers": null,
+        "http": null,
+        "id": "function:49fd2a45e38852a836748f7ebbee64fa:56:4:13",
+        "kind": "ret",
+        "line": 56,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "return orders.create(sku, quantity)"
+      }
+    ],
+    "function:548a51f250b7c7a467099ac3d5fb20b6": [
+      {
+        "arms": null,
+        "column": 12,
+        "handlers": null,
+        "http": null,
+        "id": "function:548a51f250b7c7a467099ac3d5fb20b6:38:12:14",
+        "kind": "ret",
+        "line": 38,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "return 'order-001'"
+      }
+    ],
+    "function:c6e2a06077d7073c67ffb94e4d13d616": [
+      {
+        "arms": [
+          {
+            "body": [
+              {
+                "arms": null,
+                "column": 14,
+                "handlers": null,
+                "http": null,
+                "id": "function:c6e2a06077d7073c67ffb94e4d13d616:45:14:16",
+                "kind": "call",
+                "line": 45,
+                "name": "HTTPException",
+                "resolution": "unresolved",
+                "siteColumn": 14,
+                "siteLine": 45,
+                "targets": [],
+                "text": "HTTPException(400, 'quantity must be positive')"
+              },
+              {
+                "arms": null,
+                "column": 8,
+                "handlers": null,
+                "http": null,
+                "id": "function:c6e2a06077d7073c67ffb94e4d13d616:45:8:17",
+                "kind": "raise",
+                "line": 45,
+                "name": null,
+                "siteColumn": null,
+                "siteLine": null,
+                "targets": [],
+                "text": "raise HTTPException(400, 'quantity must be positive')"
+              }
+            ],
+            "label": "quantity <= 0 为真",
+            "line": null
+          },
+          {
+            "body": [],
+            "label": "否则",
+            "line": null
+          }
+        ],
+        "column": 4,
+        "handlers": null,
+        "http": null,
+        "id": "function:c6e2a06077d7073c67ffb94e4d13d616:44:4:15",
+        "kind": "if",
+        "line": 44,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "if quantity <= 0:\n    raise HTTPException(400, 'quantity must be positive')"
+      },
+      {
+        "arms": [
+          {
+            "body": [
+              {
+                "arms": null,
+                "column": 14,
+                "handlers": null,
+                "http": null,
+                "id": "function:c6e2a06077d7073c67ffb94e4d13d616:47:14:19",
+                "kind": "call",
+                "line": 47,
+                "name": "HTTPException",
+                "resolution": "unresolved",
+                "siteColumn": 14,
+                "siteLine": 47,
+                "targets": [],
+                "text": "HTTPException(400, 'at most ten units')"
+              },
+              {
+                "arms": null,
+                "column": 8,
+                "handlers": null,
+                "http": null,
+                "id": "function:c6e2a06077d7073c67ffb94e4d13d616:47:8:20",
+                "kind": "raise",
+                "line": 47,
+                "name": null,
+                "siteColumn": null,
+                "siteLine": null,
+                "targets": [],
+                "text": "raise HTTPException(400, 'at most ten units')"
+              }
+            ],
+            "label": "quantity > 10 为真",
+            "line": null
+          },
+          {
+            "body": [],
+            "label": "否则",
+            "line": null
+          }
+        ],
+        "column": 4,
+        "handlers": null,
+        "http": null,
+        "id": "function:c6e2a06077d7073c67ffb94e4d13d616:46:4:18",
+        "kind": "if",
+        "line": 46,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "if quantity > 10:\n    raise HTTPException(400, 'at most ten units')"
+      }
+    ],
+    "function:d6829bb54eb19da7ce896093ca460682": [
+      {
+        "arms": null,
+        "column": 4,
+        "handlers": null,
+        "http": null,
+        "id": "function:d6829bb54eb19da7ce896093ca460682:51:4:21",
+        "kind": "call",
+        "line": 51,
+        "name": "print",
+        "resolution": "unresolved",
+        "siteColumn": 4,
+        "siteLine": 51,
+        "targets": [],
+        "text": "print(event, sku)"
+      },
+      {
+        "arms": null,
+        "column": 4,
+        "handlers": null,
+        "http": null,
+        "id": "function:d6829bb54eb19da7ce896093ca460682:51:4:22",
+        "kind": "stmt",
+        "line": 51,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "print(event, sku)"
+      }
+    ],
+    "function:d903252d6f73ff154fb98d1429196269": [
+      {
+        "arms": null,
+        "column": 10,
+        "handlers": null,
+        "http": null,
+        "id": "function:d903252d6f73ff154fb98d1429196269:7:10:23",
+        "kind": "call",
+        "line": 7,
+        "name": "JSON.stringify",
+        "resolution": "unresolved",
+        "siteColumn": 15,
+        "siteLine": 7,
+        "targets": [],
+        "text": "JSON.stringify({ sku, quantity })"
+      },
+      {
+        "arms": null,
+        "column": 25,
+        "handlers": null,
+        "http": {
+          "m": "POST",
+          "p": "/api/orders",
+          "via": "fetch"
+        },
+        "id": "function:d903252d6f73ff154fb98d1429196269:5:25:24",
+        "kind": "http",
+        "line": 5,
+        "name": "fetch",
+        "resolution": "candidate",
+        "siteColumn": 25,
+        "siteLine": 5,
+        "targets": [
+          {
+            "id": "function:49fd2a45e38852a836748f7ebbee64fa",
+            "origin": "http-route-match",
+            "status": "candidate"
+          }
+        ],
+        "text": "fetch('/api/orders', { method: 'POST', body: JSON.stringify({ sku, quantity }), })"
+      },
+      {
+        "arms": null,
+        "column": 0,
+        "handlers": null,
+        "http": null,
+        "id": "function:d903252d6f73ff154fb98d1429196269:5:0:25",
+        "kind": "await",
+        "line": 5,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "await fetch('/api/orders', { method: 'POST', body: JSON.stringify({ sku, quantity }), })"
+      },
+      {
+        "arms": null,
+        "column": 0,
+        "handlers": null,
+        "http": null,
+        "id": "function:d903252d6f73ff154fb98d1429196269:5:0:26",
+        "kind": "stmt",
+        "line": 5,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "const response = await fetch('/api/orders', { method: 'POST', body: JSON.stringify({ sku, quantity }), })"
+      },
+      {
+        "arms": [
+          {
+            "body": [
+              {
+                "arms": null,
+                "column": 4,
+                "handlers": null,
+                "http": null,
+                "id": "function:d903252d6f73ff154fb98d1429196269:10:4:28",
+                "kind": "call",
+                "line": 10,
+                "name": "showError",
+                "resolution": "indexed",
+                "siteColumn": 4,
+                "siteLine": 10,
+                "targets": [
+                  {
+                    "id": "function:0c84770db9f030ee25555a0cd23bf2ab",
+                    "origin": "codegraph",
+                    "status": "indexed"
+                  }
+                ],
+                "text": "showError('The order could not be created')"
+              },
+              {
+                "arms": null,
+                "column": 0,
+                "handlers": null,
+                "http": null,
+                "id": "function:d903252d6f73ff154fb98d1429196269:10:0:29",
+                "kind": "stmt",
+                "line": 10,
+                "name": null,
+                "siteColumn": null,
+                "siteLine": null,
+                "targets": [],
+                "text": "showError('The order could not be created')"
+              },
+              {
+                "arms": null,
+                "column": 0,
+                "handlers": null,
+                "http": null,
+                "id": "function:d903252d6f73ff154fb98d1429196269:11:0:30",
+                "kind": "ret",
+                "line": 11,
+                "name": null,
+                "siteColumn": null,
+                "siteLine": null,
+                "targets": [],
+                "text": "return null"
+              }
+            ],
+            "label": "!response.ok 为真",
+            "line": 9
+          },
+          {
+            "body": [],
+            "label": "否则",
+            "line": 9
+          }
+        ],
+        "column": 0,
+        "handlers": null,
+        "http": null,
+        "id": "function:d903252d6f73ff154fb98d1429196269:9:0:27",
+        "kind": "if",
+        "line": 9,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "if (!response.ok)"
+      },
+      {
+        "arms": null,
+        "column": 9,
+        "handlers": null,
+        "http": null,
+        "id": "function:d903252d6f73ff154fb98d1429196269:13:9:31",
+        "kind": "call",
+        "line": 13,
+        "name": "response.json",
+        "resolution": "unresolved",
+        "siteColumn": 18,
+        "siteLine": 13,
+        "targets": [],
+        "text": "response.json()"
+      },
+      {
+        "arms": null,
+        "column": 0,
+        "handlers": null,
+        "http": null,
+        "id": "function:d903252d6f73ff154fb98d1429196269:13:0:32",
+        "kind": "ret",
+        "line": 13,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "return response.json()"
+      }
+    ],
+    "function:e289236f8b3bd512a6e6841c35115fce": [
+      {
+        "arms": null,
+        "column": 25,
+        "handlers": null,
+        "http": null,
+        "id": "function:e289236f8b3bd512a6e6841c35115fce:61:25:33",
+        "kind": "call",
+        "line": 61,
+        "name": "inventory.lookup",
+        "resolution": "indexed",
+        "siteColumn": 35,
+        "siteLine": 61,
+        "targets": [
+          {
+            "id": "method:2e49ad74f045d140fd6948624f052415",
+            "origin": "codegraph",
+            "status": "indexed"
+          }
+        ],
+        "text": "inventory.lookup(sku)"
+      },
+      {
+        "arms": null,
+        "column": 4,
+        "handlers": null,
+        "http": null,
+        "id": "function:e289236f8b3bd512a6e6841c35115fce:61:4:34",
+        "kind": "ret",
+        "line": 61,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "return {'available': inventory.lookup(sku)}"
+      }
+    ],
+    "function:e39f4977f91a22f18fad88ec031476b0": [
+      {
+        "arms": null,
+        "column": 0,
+        "handlers": null,
+        "http": null,
+        "id": "function:e39f4977f91a22f18fad88ec031476b0:26:0:35",
+        "kind": "stmt",
+        "line": 26,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "const onSubmit = () => submitOrder(props.sku, props.quantity)"
+      },
+      {
+        "arms": [
+          {
+            "body": [
+              {
+                "arms": null,
+                "column": 21,
+                "handlers": null,
+                "http": null,
+                "id": "function:e39f4977f91a22f18fad88ec031476b0:29:21:37",
+                "kind": "call",
+                "line": 29,
+                "name": "onSubmit",
+                "resolution": "candidate",
+                "siteColumn": null,
+                "siteLine": null,
+                "targets": [
+                  {
+                    "id": "ast:frontend/App.tsx:26:19:onSubmit",
+                    "origin": "name-candidate",
+                    "status": "candidate"
+                  }
+                ],
+                "text": "onSubmit(…)"
+              }
+            ],
+            "label": "假设 onClick 被触发",
+            "line": null
+          },
+          {
+            "body": [],
+            "label": "仅绑定事件，不触发",
+            "line": null
+          }
+        ],
+        "column": 21,
+        "handlers": null,
+        "http": null,
+        "id": "function:e39f4977f91a22f18fad88ec031476b0:29:21:36",
+        "kind": "cb",
+        "line": 29,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "事件 onClick"
+      },
+      {
+        "arms": null,
+        "column": 0,
+        "handlers": null,
+        "http": null,
+        "id": "function:e39f4977f91a22f18fad88ec031476b0:27:0:38",
+        "kind": "ret",
+        "line": 27,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "return <main> <h1>Order a book</h1> <button onClick={onSubmit}>Create order</button> {props.quantity > 10 && <p>Maximum ten units</p>} </ma…"
+      }
+    ],
+    "function:f1c3cd424a39fe114c342d63aec71816": [
+      {
+        "arms": null,
+        "column": 25,
+        "handlers": null,
+        "http": {
+          "m": "GET",
+          "p": "/api/stock/{*}",
+          "via": "fetch"
+        },
+        "id": "function:f1c3cd424a39fe114c342d63aec71816:21:25:39",
+        "kind": "http",
+        "line": 21,
+        "name": "fetch",
+        "resolution": "candidate",
+        "siteColumn": 25,
+        "siteLine": 21,
+        "targets": [
+          {
+            "id": "function:e289236f8b3bd512a6e6841c35115fce",
+            "origin": "http-route-match",
+            "status": "candidate"
+          }
+        ],
+        "text": "fetch(`/api/stock/${sku}`)"
+      },
+      {
+        "arms": null,
+        "column": 0,
+        "handlers": null,
+        "http": null,
+        "id": "function:f1c3cd424a39fe114c342d63aec71816:21:0:40",
+        "kind": "await",
+        "line": 21,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "await fetch(`/api/stock/${sku}`)"
+      },
+      {
+        "arms": null,
+        "column": 0,
+        "handlers": null,
+        "http": null,
+        "id": "function:f1c3cd424a39fe114c342d63aec71816:21:0:41",
+        "kind": "stmt",
+        "line": 21,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "const response = await fetch(`/api/stock/${sku}`)"
+      },
+      {
+        "arms": null,
+        "column": 9,
+        "handlers": null,
+        "http": null,
+        "id": "function:f1c3cd424a39fe114c342d63aec71816:22:9:42",
+        "kind": "call",
+        "line": 22,
+        "name": "response.json",
+        "resolution": "unresolved",
+        "siteColumn": 18,
+        "siteLine": 22,
+        "targets": [],
+        "text": "response.json()"
+      },
+      {
+        "arms": null,
+        "column": 0,
+        "handlers": null,
+        "http": null,
+        "id": "function:f1c3cd424a39fe114c342d63aec71816:22:0:43",
+        "kind": "ret",
+        "line": 22,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "return response.json()"
+      }
+    ],
+    "method:06f7debe05b092e81e35797575b6028a": [
+      {
+        "arms": null,
+        "column": 8,
+        "handlers": null,
+        "http": null,
+        "id": "method:06f7debe05b092e81e35797575b6028a:27:8:44",
+        "kind": "call",
+        "line": 27,
+        "name": "validate_quantity",
+        "resolution": "indexed",
+        "siteColumn": 8,
+        "siteLine": 27,
+        "targets": [
+          {
+            "id": "function:c6e2a06077d7073c67ffb94e4d13d616",
+            "origin": "codegraph",
+            "status": "indexed"
+          }
+        ],
+        "text": "validate_quantity(quantity)"
+      },
+      {
+        "arms": null,
+        "column": 8,
+        "handlers": null,
+        "http": null,
+        "id": "method:06f7debe05b092e81e35797575b6028a:27:8:45",
+        "kind": "stmt",
+        "line": 27,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "validate_quantity(quantity)"
+      },
+      {
+        "arms": null,
+        "body": [
+          {
+            "arms": null,
+            "column": 26,
+            "handlers": null,
+            "http": null,
+            "id": "method:06f7debe05b092e81e35797575b6028a:29:26:47",
+            "kind": "call",
+            "line": 29,
+            "name": "inventory.reserve",
+            "resolution": "indexed",
+            "siteColumn": 36,
+            "siteLine": 29,
+            "targets": [
+              {
+                "id": "method:2edccf48c81e5d9933d2e8ea5fe65dc4",
+                "origin": "codegraph",
+                "status": "indexed"
+              }
+            ],
+            "text": "inventory.reserve(sku, quantity)"
+          },
+          {
+            "arms": null,
+            "column": 12,
+            "handlers": null,
+            "http": null,
+            "id": "method:06f7debe05b092e81e35797575b6028a:29:12:48",
+            "kind": "stmt",
+            "line": 29,
+            "name": null,
+            "siteColumn": null,
+            "siteLine": null,
+            "targets": [],
+            "text": "reservation = inventory.reserve(sku, quantity)"
+          },
+          {
+            "arms": null,
+            "column": 19,
+            "handlers": null,
+            "http": null,
+            "id": "method:06f7debe05b092e81e35797575b6028a:30:19:49",
+            "kind": "call",
+            "line": 30,
+            "name": "self.persist",
+            "resolution": "indexed",
+            "siteColumn": 24,
+            "siteLine": 30,
+            "targets": [
+              {
+                "id": "method:d3704e85d22c6a1aa46e110e24bea130",
+                "origin": "codegraph",
+                "status": "indexed"
+              }
+            ],
+            "text": "self.persist(reservation)"
+          },
+          {
+            "arms": null,
+            "column": 12,
+            "handlers": null,
+            "http": null,
+            "id": "method:06f7debe05b092e81e35797575b6028a:30:12:50",
+            "kind": "ret",
+            "line": 30,
+            "name": null,
+            "siteColumn": null,
+            "siteLine": null,
+            "targets": [],
+            "text": "return self.persist(reservation)"
+          }
+        ],
+        "column": 8,
+        "elseBody": [],
+        "finallyBody": [
+          {
+            "arms": null,
+            "column": 12,
+            "handlers": null,
+            "http": null,
+            "id": "method:06f7debe05b092e81e35797575b6028a:34:12:51",
+            "kind": "call",
+            "line": 34,
+            "name": "audit",
+            "resolution": "indexed",
+            "siteColumn": 12,
+            "siteLine": 34,
+            "targets": [
+              {
+                "id": "function:d6829bb54eb19da7ce896093ca460682",
+                "origin": "codegraph",
+                "status": "indexed"
+              }
+            ],
+            "text": "audit('attempt', sku)"
+          },
+          {
+            "arms": null,
+            "column": 12,
+            "handlers": null,
+            "http": null,
+            "id": "method:06f7debe05b092e81e35797575b6028a:34:12:52",
+            "kind": "stmt",
+            "line": 34,
+            "name": null,
+            "siteColumn": null,
+            "siteLine": null,
+            "targets": [],
+            "text": "audit('attempt', sku)"
+          }
+        ],
+        "handlers": [
+          {
+            "body": [
+              {
+                "arms": null,
+                "column": 18,
+                "handlers": null,
+                "http": null,
+                "id": "method:06f7debe05b092e81e35797575b6028a:32:18:53",
+                "kind": "call",
+                "line": 32,
+                "name": "HTTPException",
+                "resolution": "unresolved",
+                "siteColumn": 18,
+                "siteLine": 32,
+                "targets": [],
+                "text": "HTTPException(409, 'stock conflict')"
+              },
+              {
+                "arms": null,
+                "column": 12,
+                "handlers": null,
+                "http": null,
+                "id": "method:06f7debe05b092e81e35797575b6028a:32:12:54",
+                "kind": "raise",
+                "line": 32,
+                "name": null,
+                "siteColumn": null,
+                "siteLine": null,
+                "targets": [],
+                "text": "raise HTTPException(409, 'stock conflict')"
+              }
+            ],
+            "label": "except ValueError",
+            "line": null
+          }
+        ],
+        "http": null,
+        "id": "method:06f7debe05b092e81e35797575b6028a:28:8:46",
+        "kind": "try",
+        "line": 28,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "try:\n    reservation = inventory.reserve(sku, quantity)\n    return self.persist(reservation)\nexcept ValueError:\n    raise HTTPException(409, 'stock conflict')\nfinally:\n    audit('attempt', sku)"
+      }
+    ],
+    "method:2e49ad74f045d140fd6948624f052415": [
+      {
+        "arms": [
+          {
+            "body": [
+              {
+                "arms": null,
+                "column": 12,
+                "handlers": null,
+                "http": null,
+                "id": "method:2e49ad74f045d140fd6948624f052415:18:12:56",
+                "kind": "ret",
+                "line": 18,
+                "name": null,
+                "siteColumn": null,
+                "siteLine": null,
+                "targets": [],
+                "text": "return 0"
+              }
+            ],
+            "label": "sku == 'missing' 为真",
+            "line": null
+          },
+          {
+            "body": [],
+            "label": "否则",
+            "line": null
+          }
+        ],
+        "column": 8,
+        "handlers": null,
+        "http": null,
+        "id": "method:2e49ad74f045d140fd6948624f052415:17:8:55",
+        "kind": "if",
+        "line": 17,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "if sku == 'missing':\n    return 0"
+      },
+      {
+        "arms": null,
+        "column": 8,
+        "handlers": null,
+        "http": null,
+        "id": "method:2e49ad74f045d140fd6948624f052415:19:8:57",
+        "kind": "ret",
+        "line": 19,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "return 20"
+      }
+    ],
+    "method:2edccf48c81e5d9933d2e8ea5fe65dc4": [
+      {
+        "arms": null,
+        "column": 20,
+        "handlers": null,
+        "http": null,
+        "id": "method:2edccf48c81e5d9933d2e8ea5fe65dc4:9:20:58",
+        "kind": "call",
+        "line": 9,
+        "name": "self.lookup",
+        "resolution": "indexed",
+        "siteColumn": 25,
+        "siteLine": 9,
+        "targets": [
+          {
+            "id": "method:2e49ad74f045d140fd6948624f052415",
+            "origin": "codegraph",
+            "status": "indexed"
+          }
+        ],
+        "text": "self.lookup(sku)"
+      },
+      {
+        "arms": null,
+        "column": 8,
+        "handlers": null,
+        "http": null,
+        "id": "method:2edccf48c81e5d9933d2e8ea5fe65dc4:9:8:59",
+        "kind": "stmt",
+        "line": 9,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "available = self.lookup(sku)"
+      },
+      {
+        "arms": [
+          {
+            "body": [
+              {
+                "arms": null,
+                "column": 18,
+                "handlers": null,
+                "http": null,
+                "id": "method:2edccf48c81e5d9933d2e8ea5fe65dc4:11:18:61",
+                "kind": "call",
+                "line": 11,
+                "name": "ValueError",
+                "resolution": "unresolved",
+                "siteColumn": 18,
+                "siteLine": 11,
+                "targets": [],
+                "text": "ValueError('insufficient stock')"
+              },
+              {
+                "arms": null,
+                "column": 12,
+                "handlers": null,
+                "http": null,
+                "id": "method:2edccf48c81e5d9933d2e8ea5fe65dc4:11:12:62",
+                "kind": "raise",
+                "line": 11,
+                "name": null,
+                "siteColumn": null,
+                "siteLine": null,
+                "targets": [],
+                "text": "raise ValueError('insufficient stock')"
+              }
+            ],
+            "label": "available < quantity 为真",
+            "line": null
+          },
+          {
+            "body": [],
+            "label": "否则",
+            "line": null
+          }
+        ],
+        "column": 8,
+        "handlers": null,
+        "http": null,
+        "id": "method:2edccf48c81e5d9933d2e8ea5fe65dc4:10:8:60",
+        "kind": "if",
+        "line": 10,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "if available < quantity:\n    raise ValueError('insufficient stock')"
+      },
+      {
+        "arms": null,
+        "body": [
+          {
+            "arms": null,
+            "column": 12,
+            "handlers": null,
+            "http": null,
+            "id": "method:2edccf48c81e5d9933d2e8ea5fe65dc4:13:12:64",
+            "kind": "call",
+            "line": 13,
+            "name": "self.mark_reserved",
+            "resolution": "indexed",
+            "siteColumn": 17,
+            "siteLine": 13,
+            "targets": [
+              {
+                "id": "method:8043208ac0e0e880c455fada21c89cf8",
+                "origin": "codegraph",
+                "status": "indexed"
+              }
+            ],
+            "text": "self.mark_reserved(sku)"
+          },
+          {
+            "arms": null,
+            "column": 12,
+            "handlers": null,
+            "http": null,
+            "id": "method:2edccf48c81e5d9933d2e8ea5fe65dc4:13:12:65",
+            "kind": "stmt",
+            "line": 13,
+            "name": null,
+            "siteColumn": null,
+            "siteLine": null,
+            "targets": [],
+            "text": "self.mark_reserved(sku)"
+          }
+        ],
+        "column": 8,
+        "conditionBody": [
+          {
+            "arms": null,
+            "column": 20,
+            "handlers": null,
+            "http": null,
+            "id": "method:2edccf48c81e5d9933d2e8ea5fe65dc4:12:20:66",
+            "kind": "call",
+            "line": 12,
+            "name": "range",
+            "resolution": "unresolved",
+            "siteColumn": 20,
+            "siteLine": 12,
+            "targets": [],
+            "text": "range(quantity)"
+          }
+        ],
+        "elseBody": [],
+        "handlers": null,
+        "http": null,
+        "id": "method:2edccf48c81e5d9933d2e8ea5fe65dc4:12:8:63",
+        "kind": "loop",
+        "line": 12,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "for unit in range(quantity):\n    self.mark_reserved(sku)",
+        "whileLoop": false
+      },
+      {
+        "arms": null,
+        "column": 8,
+        "handlers": null,
+        "http": null,
+        "id": "method:2edccf48c81e5d9933d2e8ea5fe65dc4:14:8:67",
+        "kind": "ret",
+        "line": 14,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "return {'sku': sku, 'reserved': quantity}"
+      }
+    ],
+    "method:8043208ac0e0e880c455fada21c89cf8": [
+      {
+        "arms": null,
+        "column": 8,
+        "handlers": null,
+        "http": null,
+        "id": "method:8043208ac0e0e880c455fada21c89cf8:22:8:68",
+        "kind": "call",
+        "line": 22,
+        "name": "audit",
+        "resolution": "indexed",
+        "siteColumn": 8,
+        "siteLine": 22,
+        "targets": [
+          {
+            "id": "function:d6829bb54eb19da7ce896093ca460682",
+            "origin": "codegraph",
+            "status": "indexed"
+          }
+        ],
+        "text": "audit('reserve', sku)"
+      },
+      {
+        "arms": null,
+        "column": 8,
+        "handlers": null,
+        "http": null,
+        "id": "method:8043208ac0e0e880c455fada21c89cf8:22:8:69",
+        "kind": "stmt",
+        "line": 22,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "audit('reserve', sku)"
+      }
+    ],
+    "method:d3704e85d22c6a1aa46e110e24bea130": [
+      {
+        "arms": null,
+        "column": 22,
+        "handlers": null,
+        "http": null,
+        "id": "method:d3704e85d22c6a1aa46e110e24bea130:40:22:70",
+        "kind": "call",
+        "line": 40,
+        "name": "build_id",
+        "resolution": "indexed",
+        "siteColumn": 22,
+        "siteLine": 40,
+        "targets": [
+          {
+            "id": "function:548a51f250b7c7a467099ac3d5fb20b6",
+            "origin": "codegraph",
+            "status": "indexed"
+          }
+        ],
+        "text": "build_id()"
+      },
+      {
+        "arms": null,
+        "column": 8,
+        "handlers": null,
+        "http": null,
+        "id": "method:d3704e85d22c6a1aa46e110e24bea130:40:8:71",
+        "kind": "ret",
+        "line": 40,
+        "name": null,
+        "siteColumn": null,
+        "siteLine": null,
+        "targets": [],
+        "text": "return {'id': build_id(), **reservation}"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "column": 19,
+      "endColumn": 63,
+      "endLine": 26,
+      "flowStatus": "structured",
+      "id": "ast:frontend/App.tsx:26:19:onSubmit",
+      "kind": "function",
+      "language": "tsx",
+      "line": 26,
+      "name": "onSubmit",
+      "origin": "ast",
+      "parent": "function:e39f4977f91a22f18fad88ec031476b0",
+      "path": "frontend/App.tsx",
+      "qualifiedName": "OrderPage.onSubmit"
+    },
+    {
+      "column": 0,
+      "endColumn": 48,
+      "endLine": 40,
+      "flowStatus": "container",
+      "id": "class:939a237202f7b67378ce97bf6c21ba29",
+      "kind": "class",
+      "language": "python",
+      "line": 25,
+      "name": "OrderService",
+      "origin": "codegraph+ast",
+      "parent": "file:backend/app.py",
+      "path": "backend/app.py",
+      "qualifiedName": "OrderService",
+      "signature": ""
+    },
+    {
+      "column": 0,
+      "endColumn": 29,
+      "endLine": 22,
+      "flowStatus": "container",
+      "id": "class:ba305673246132fa20a9d73dde3a1584",
+      "kind": "class",
+      "language": "python",
+      "line": 7,
+      "name": "Inventory",
+      "origin": "codegraph+ast",
+      "parent": "file:backend/app.py",
+      "path": "backend/app.py",
+      "qualifiedName": "Inventory",
+      "signature": ""
+    },
+    {
+      "flowStatus": "container",
+      "id": "dir:backend",
+      "kind": "directory",
+      "name": "backend",
+      "origin": "hierarchy",
+      "parent": "repo2tree:root",
+      "path": "backend"
+    },
+    {
+      "flowStatus": "container",
+      "id": "dir:frontend",
+      "kind": "directory",
+      "name": "frontend",
+      "origin": "hierarchy",
+      "parent": "repo2tree:root",
+      "path": "frontend"
+    },
+    {
+      "column": 0,
+      "endColumn": 0,
+      "endLine": 66,
+      "flowStatus": "structured",
+      "id": "file:backend/app.py",
+      "kind": "file",
+      "language": "python",
+      "line": 1,
+      "name": "app.py",
+      "origin": "codegraph",
+      "parent": "dir:backend",
+      "path": "backend/app.py",
+      "qualifiedName": "backend/app.py",
+      "signature": ""
+    },
+    {
+      "column": 0,
+      "endColumn": 0,
+      "endLine": 33,
+      "flowStatus": "structured",
+      "id": "file:frontend/App.tsx",
+      "kind": "file",
+      "language": "tsx",
+      "line": 1,
+      "name": "App.tsx",
+      "origin": "codegraph",
+      "parent": "dir:frontend",
+      "path": "frontend/App.tsx",
+      "qualifiedName": "frontend/App.tsx",
+      "signature": ""
+    },
+    {
+      "column": 0,
+      "endColumn": 1,
+      "endLine": 18,
+      "flowStatus": "structured",
+      "id": "function:0c84770db9f030ee25555a0cd23bf2ab",
+      "kind": "function",
+      "language": "tsx",
+      "line": 16,
+      "name": "showError",
+      "origin": "codegraph+ast",
+      "parent": "file:frontend/App.tsx",
+      "path": "frontend/App.tsx",
+      "qualifiedName": "showError",
+      "signature": "(message: string)"
+    },
+    {
+      "column": 0,
+      "endColumn": 39,
+      "endLine": 56,
+      "flowStatus": "structured",
+      "id": "function:49fd2a45e38852a836748f7ebbee64fa",
+      "kind": "function",
+      "language": "python",
+      "line": 55,
+      "name": "create_order",
+      "origin": "codegraph+ast",
+      "parent": "file:backend/app.py",
+      "path": "backend/app.py",
+      "qualifiedName": "create_order",
+      "signature": "(sku: str, quantity: int) -> dict"
+    },
+    {
+      "column": 8,
+      "endColumn": 30,
+      "endLine": 38,
+      "flowStatus": "structured",
+      "id": "function:548a51f250b7c7a467099ac3d5fb20b6",
+      "kind": "function",
+      "language": "python",
+      "line": 37,
+      "name": "build_id",
+      "origin": "codegraph+ast",
+      "parent": "method:d3704e85d22c6a1aa46e110e24bea130",
+      "path": "backend/app.py",
+      "qualifiedName": "OrderService.persist.build_id",
+      "signature": "() -> str"
+    },
+    {
+      "column": 0,
+      "endColumn": 53,
+      "endLine": 47,
+      "flowStatus": "structured",
+      "id": "function:c6e2a06077d7073c67ffb94e4d13d616",
+      "kind": "function",
+      "language": "python",
+      "line": 43,
+      "name": "validate_quantity",
+      "origin": "codegraph+ast",
+      "parent": "file:backend/app.py",
+      "path": "backend/app.py",
+      "qualifiedName": "validate_quantity",
+      "signature": "(quantity: int) -> None"
+    },
+    {
+      "column": 0,
+      "endColumn": 21,
+      "endLine": 51,
+      "flowStatus": "structured",
+      "id": "function:d6829bb54eb19da7ce896093ca460682",
+      "kind": "function",
+      "language": "python",
+      "line": 50,
+      "name": "audit",
+      "origin": "codegraph+ast",
+      "parent": "file:backend/app.py",
+      "path": "backend/app.py",
+      "qualifiedName": "audit",
+      "signature": "(event: str, sku: str) -> None"
+    },
+    {
+      "column": 0,
+      "endColumn": 1,
+      "endLine": 14,
+      "executionKind": "async",
+      "flowStatus": "structured",
+      "id": "function:d903252d6f73ff154fb98d1429196269",
+      "kind": "function",
+      "language": "tsx",
+      "line": 4,
+      "name": "submitOrder",
+      "origin": "codegraph+ast",
+      "parent": "file:frontend/App.tsx",
+      "path": "frontend/App.tsx",
+      "qualifiedName": "submitOrder",
+      "signature": "(sku: string, quantity: number)"
+    },
+    {
+      "column": 0,
+      "endColumn": 47,
+      "endLine": 61,
+      "flowStatus": "structured",
+      "id": "function:e289236f8b3bd512a6e6841c35115fce",
+      "kind": "function",
+      "language": "python",
+      "line": 60,
+      "name": "read_stock",
+      "origin": "codegraph+ast",
+      "parent": "file:backend/app.py",
+      "path": "backend/app.py",
+      "qualifiedName": "read_stock",
+      "signature": "(sku: str) -> dict"
+    },
+    {
+      "column": 0,
+      "endColumn": 1,
+      "endLine": 32,
+      "flowStatus": "structured",
+      "id": "function:e39f4977f91a22f18fad88ec031476b0",
+      "kind": "function",
+      "language": "tsx",
+      "line": 25,
+      "name": "OrderPage",
+      "origin": "codegraph+ast",
+      "parent": "file:frontend/App.tsx",
+      "path": "frontend/App.tsx",
+      "qualifiedName": "OrderPage",
+      "signature": "(props: Props)"
+    },
+    {
+      "column": 0,
+      "endColumn": 1,
+      "endLine": 23,
+      "executionKind": "async",
+      "flowStatus": "structured",
+      "id": "function:f1c3cd424a39fe114c342d63aec71816",
+      "kind": "function",
+      "language": "tsx",
+      "line": 20,
+      "name": "loadStock",
+      "origin": "codegraph+ast",
+      "parent": "file:frontend/App.tsx",
+      "path": "frontend/App.tsx",
+      "qualifiedName": "loadStock",
+      "signature": "(sku: string)"
+    },
+    {
+      "column": 0,
+      "endColumn": 42,
+      "endLine": 2,
+      "flowStatus": "container",
+      "id": "import:69f1aef03fa87afd40ee2bd55f93430d",
+      "kind": "import",
+      "language": "python",
+      "line": 2,
+      "name": "fastapi",
+      "origin": "codegraph",
+      "parent": "file:backend/app.py",
+      "path": "backend/app.py",
+      "qualifiedName": "fastapi",
+      "signature": "from fastapi import FastAPI, HTTPException"
+    },
+    {
+      "column": 4,
+      "endColumn": 33,
+      "endLine": 34,
+      "flowStatus": "structured",
+      "id": "method:06f7debe05b092e81e35797575b6028a",
+      "kind": "method",
+      "language": "python",
+      "line": 26,
+      "name": "create",
+      "origin": "codegraph+ast",
+      "parent": "class:939a237202f7b67378ce97bf6c21ba29",
+      "path": "backend/app.py",
+      "qualifiedName": "OrderService.create",
+      "signature": "(self, sku: str, quantity: int) -> dict"
+    },
+    {
+      "column": 4,
+      "endColumn": 17,
+      "endLine": 19,
+      "flowStatus": "structured",
+      "id": "method:2e49ad74f045d140fd6948624f052415",
+      "kind": "method",
+      "language": "python",
+      "line": 16,
+      "name": "lookup",
+      "origin": "codegraph+ast",
+      "parent": "class:ba305673246132fa20a9d73dde3a1584",
+      "path": "backend/app.py",
+      "qualifiedName": "Inventory.lookup",
+      "signature": "(self, sku: str) -> int"
+    },
+    {
+      "column": 4,
+      "endColumn": 49,
+      "endLine": 14,
+      "flowStatus": "structured",
+      "id": "method:2edccf48c81e5d9933d2e8ea5fe65dc4",
+      "kind": "method",
+      "language": "python",
+      "line": 8,
+      "name": "reserve",
+      "origin": "codegraph+ast",
+      "parent": "class:ba305673246132fa20a9d73dde3a1584",
+      "path": "backend/app.py",
+      "qualifiedName": "Inventory.reserve",
+      "signature": "(self, sku: str, quantity: int) -> dict"
+    },
+    {
+      "column": 4,
+      "endColumn": 29,
+      "endLine": 22,
+      "flowStatus": "structured",
+      "id": "method:8043208ac0e0e880c455fada21c89cf8",
+      "kind": "method",
+      "language": "python",
+      "line": 21,
+      "name": "mark_reserved",
+      "origin": "codegraph+ast",
+      "parent": "class:ba305673246132fa20a9d73dde3a1584",
+      "path": "backend/app.py",
+      "qualifiedName": "Inventory.mark_reserved",
+      "signature": "(self, sku: str) -> None"
+    },
+    {
+      "column": 4,
+      "endColumn": 48,
+      "endLine": 40,
+      "flowStatus": "structured",
+      "id": "method:d3704e85d22c6a1aa46e110e24bea130",
+      "kind": "method",
+      "language": "python",
+      "line": 36,
+      "name": "persist",
+      "origin": "codegraph+ast",
+      "parent": "class:939a237202f7b67378ce97bf6c21ba29",
+      "path": "backend/app.py",
+      "qualifiedName": "OrderService.persist",
+      "signature": "(self, reservation: dict) -> dict"
+    },
+    {
+      "column": 15,
+      "endColumn": 26,
+      "endLine": 2,
+      "flowStatus": "container",
+      "id": "property:8f92e35192cedbcaf1cc3a3e2df27a8f",
+      "kind": "property",
+      "language": "tsx",
+      "line": 2,
+      "name": "sku",
+      "origin": "codegraph",
+      "parent": "type_alias:f79de9f2ea877897bbd91e07cb1d7bf2",
+      "path": "frontend/App.tsx",
+      "qualifiedName": "Props::sku",
+      "signature": "sku: string"
+    },
+    {
+      "column": 28,
+      "endColumn": 44,
+      "endLine": 2,
+      "flowStatus": "container",
+      "id": "property:bafe780d5e447c8b4d33ec772d7a1e42",
+      "kind": "property",
+      "language": "tsx",
+      "line": 2,
+      "name": "quantity",
+      "origin": "codegraph",
+      "parent": "type_alias:f79de9f2ea877897bbd91e07cb1d7bf2",
+      "path": "frontend/App.tsx",
+      "qualifiedName": "Props::quantity",
+      "signature": "quantity: number"
+    },
+    {
+      "flowStatus": "container",
+      "id": "repo2tree:root",
+      "kind": "project",
+      "name": "shop",
+      "origin": "hierarchy",
+      "parent": null,
+      "path": ""
+    },
+    {
+      "column": 0,
+      "endColumn": 46,
+      "endLine": 2,
+      "flowStatus": "container",
+      "id": "type_alias:f79de9f2ea877897bbd91e07cb1d7bf2",
+      "kind": "type_alias",
+      "language": "tsx",
+      "line": 2,
+      "name": "Props",
+      "origin": "codegraph",
+      "parent": "file:frontend/App.tsx",
+      "path": "frontend/App.tsx",
+      "qualifiedName": "Props",
+      "signature": ""
+    },
+    {
+      "column": 0,
+      "endColumn": 23,
+      "endLine": 65,
+      "flowStatus": "container",
+      "id": "variable:43bac05c2c18da266b88bdad2433b341",
+      "kind": "variable",
+      "language": "python",
+      "line": 65,
+      "name": "orders",
+      "origin": "codegraph",
+      "parent": "file:backend/app.py",
+      "path": "backend/app.py",
+      "qualifiedName": "orders",
+      "signature": "= OrderService()"
+    },
+    {
+      "column": 0,
+      "endColumn": 23,
+      "endLine": 64,
+      "flowStatus": "container",
+      "id": "variable:8ee8c9b04a876ac17292a7093abe4124",
+      "kind": "variable",
+      "language": "python",
+      "line": 64,
+      "name": "inventory",
+      "origin": "codegraph",
+      "parent": "file:backend/app.py",
+      "path": "backend/app.py",
+      "qualifiedName": "inventory",
+      "signature": "= Inventory()"
+    },
+    {
+      "column": 0,
+      "endColumn": 15,
+      "endLine": 4,
+      "flowStatus": "container",
+      "id": "variable:e61730ef3d6eb11c1552dadc12ae0e44",
+      "kind": "variable",
+      "language": "python",
+      "line": 4,
+      "name": "app",
+      "origin": "codegraph",
+      "parent": "file:backend/app.py",
+      "path": "backend/app.py",
+      "qualifiedName": "app",
+      "signature": "= FastAPI()"
+    }
+  ],
+  "project": {
+    "codegraphVersion": "1.6.0",
+    "name": "shop",
+    "path": "/Users/alice/code/repo2tree/examples/shop"
+  },
+  "root": "repo2tree:root",
+  "routes": [
+    {
+      "file": "backend/app.py",
+      "method": "POST",
+      "node": "function:49fd2a45e38852a836748f7ebbee64fa",
+      "owner": "app",
+      "path": "/api/orders"
+    },
+    {
+      "file": "backend/app.py",
+      "method": "GET",
+      "node": "function:e289236f8b3bd512a6e6841c35115fce",
+      "owner": "app",
+      "path": "/api/stock/{sku}"
+    }
+  ],
+  "schemaVersion": 1,
+  "snapshot": {
+    "id": "a067c52a16f474df5db7e2d6f68edc5d859159e2d42da27ef05cf5d32a9ba4f8",
+    "inputsEvaluated": false,
+    "kind": "static"
+  },
+  "sources": {
+    "backend/app.py": "\"\"\"Static teaching fixture. Scanning does not import FastAPI or run this file.\"\"\"\nfrom fastapi import FastAPI, HTTPException\n\napp = FastAPI()\n\n\nclass Inventory:\n    def reserve(self, sku: str, quantity: int) -> dict:\n        available = self.lookup(sku)\n        if available < quantity:\n            raise ValueError(\"insufficient stock\")\n        for unit in range(quantity):\n            self.mark_reserved(sku)\n        return {\"sku\": sku, \"reserved\": quantity}\n\n    def lookup(self, sku: str) -> int:\n        if sku == \"missing\":\n            return 0\n        return 20\n\n    def mark_reserved(self, sku: str) -> None:\n        audit(\"reserve\", sku)\n\n\nclass OrderService:\n    def create(self, sku: str, quantity: int) -> dict:\n        validate_quantity(quantity)\n        try:\n            reservation = inventory.reserve(sku, quantity)\n            return self.persist(reservation)\n        except ValueError:\n            raise HTTPException(409, \"stock conflict\")\n        finally:\n            audit(\"attempt\", sku)\n\n    def persist(self, reservation: dict) -> dict:\n        def build_id() -> str:\n            return \"order-001\"\n\n        return {\"id\": build_id(), **reservation}\n\n\ndef validate_quantity(quantity: int) -> None:\n    if quantity <= 0:\n        raise HTTPException(400, \"quantity must be positive\")\n    if quantity > 10:\n        raise HTTPException(400, \"at most ten units\")\n\n\ndef audit(event: str, sku: str) -> None:\n    print(event, sku)\n\n\n@app.post(\"/api/orders\")\ndef create_order(sku: str, quantity: int) -> dict:\n    return orders.create(sku, quantity)\n\n\n@app.get(\"/api/stock/{sku}\")\ndef read_stock(sku: str) -> dict:\n    return {\"available\": inventory.lookup(sku)}\n\n\ninventory = Inventory()\norders = OrderService()\n",
+    "frontend/App.tsx": "// Static teaching fixture: event registration is separate from event activation.\ntype Props = { sku: string; quantity: number }\n\nexport async function submitOrder(sku: string, quantity: number) {\n  const response = await fetch('/api/orders', {\n    method: 'POST',\n    body: JSON.stringify({ sku, quantity }),\n  })\n  if (!response.ok) {\n    showError('The order could not be created')\n    return null\n  }\n  return response.json()\n}\n\nexport function showError(message: string) {\n  console.error(message)\n}\n\nexport async function loadStock(sku: string) {\n  const response = await fetch(`/api/stock/${sku}`)\n  return response.json()\n}\n\nexport function OrderPage(props: Props) {\n  const onSubmit = () => submitOrder(props.sku, props.quantity)\n  return <main>\n    <h1>Order a book</h1>\n    <button onClick={onSubmit}>Create order</button>\n    {props.quantity > 10 && <p>Maximum ten units</p>}\n  </main>\n}\n"
+  },
+  "stats": {
+    "edges": 36,
+    "files": 2,
+    "functions": 15,
+    "indexedSymbols": 25,
+    "structuredFunctions": 15,
+    "symbols": 29,
+    "unresolvedReferences": 17
+  },
+  "unresolvedReferences": [
+    {
+      "column": 0,
+      "kind": "imports",
+      "line": 2,
+      "name": "fastapi",
+      "source": "file:backend/app.py"
+    },
+    {
+      "column": 20,
+      "kind": "imports",
+      "line": 2,
+      "name": "FastAPI",
+      "source": "file:backend/app.py"
+    },
+    {
+      "column": 29,
+      "kind": "imports",
+      "line": 2,
+      "name": "HTTPException",
+      "source": "file:backend/app.py"
+    },
+    {
+      "column": 18,
+      "kind": "calls",
+      "line": 11,
+      "name": "ValueError",
+      "source": "method:2edccf48c81e5d9933d2e8ea5fe65dc4"
+    },
+    {
+      "column": 20,
+      "kind": "calls",
+      "line": 12,
+      "name": "range",
+      "source": "method:2edccf48c81e5d9933d2e8ea5fe65dc4"
+    },
+    {
+      "column": 18,
+      "kind": "calls",
+      "line": 32,
+      "name": "HTTPException",
+      "source": "method:06f7debe05b092e81e35797575b6028a"
+    },
+    {
+      "column": 14,
+      "kind": "calls",
+      "line": 45,
+      "name": "HTTPException",
+      "source": "function:c6e2a06077d7073c67ffb94e4d13d616"
+    },
+    {
+      "column": 14,
+      "kind": "calls",
+      "line": 47,
+      "name": "HTTPException",
+      "source": "function:c6e2a06077d7073c67ffb94e4d13d616"
+    },
+    {
+      "column": 4,
+      "kind": "calls",
+      "line": 51,
+      "name": "print",
+      "source": "function:d6829bb54eb19da7ce896093ca460682"
+    },
+    {
+      "column": 1,
+      "kind": "calls",
+      "line": 54,
+      "name": "app.post",
+      "source": "file:backend/app.py"
+    },
+    {
+      "column": 1,
+      "kind": "calls",
+      "line": 59,
+      "name": "app.get",
+      "source": "file:backend/app.py"
+    },
+    {
+      "column": 25,
+      "kind": "calls",
+      "line": 5,
+      "name": "fetch",
+      "source": "function:d903252d6f73ff154fb98d1429196269"
+    },
+    {
+      "column": 10,
+      "kind": "calls",
+      "line": 7,
+      "name": "JSON.stringify",
+      "source": "function:d903252d6f73ff154fb98d1429196269"
+    },
+    {
+      "column": 9,
+      "kind": "calls",
+      "line": 13,
+      "name": "response.json",
+      "source": "function:d903252d6f73ff154fb98d1429196269"
+    },
+    {
+      "column": 2,
+      "kind": "calls",
+      "line": 17,
+      "name": "console.error",
+      "source": "function:0c84770db9f030ee25555a0cd23bf2ab"
+    },
+    {
+      "column": 25,
+      "kind": "calls",
+      "line": 21,
+      "name": "fetch",
+      "source": "function:f1c3cd424a39fe114c342d63aec71816"
+    },
+    {
+      "column": 9,
+      "kind": "calls",
+      "line": 22,
+      "name": "response.json",
+      "source": "function:f1c3cd424a39fe114c342d63aec71816"
+    }
+  ]
+}

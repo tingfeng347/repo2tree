@@ -1,0 +1,13 @@
+import hljs from 'highlight.js/lib/core';
+import python from 'highlight.js/lib/languages/python';
+import javascript from 'highlight.js/lib/languages/javascript';
+import typescript from 'highlight.js/lib/languages/typescript';
+import xml from 'highlight.js/lib/languages/xml';
+import css from 'highlight.js/lib/languages/css';
+import json from 'highlight.js/lib/languages/json';
+import rust from 'highlight.js/lib/languages/rust';
+import go from 'highlight.js/lib/languages/go';
+import java from 'highlight.js/lib/languages/java';
+import bash from 'highlight.js/lib/languages/bash';
+for (const [name, grammar] of Object.entries({xml, css, python, javascript, typescript, json, rust, go, java, bash})) hljs.registerLanguage(name, grammar);
+export default hljs;

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code Flow Debugger</title>
+<style>/*__CODEFLOW_CSS__*/</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="logo" aria-hidden="true">◈</span><strong id="projName">项目</strong><span id="projMeta" class="muted"></span></div>
+  <div class="toolbar" role="toolbar" aria-label="调试控制">
+    <button id="btnContinue" title="继续运行到断点 / 结束 (F8)">▶ 继续</button>
+    <button id="btnPause" title="暂停 (Esc)">⏸ 暂停</button>
+    <span class="sep"></span>
+    <button id="btnInto" title="单步进入 (F11)">↘ 进入</button>
+    <button id="btnOver" title="单步跳过 (F10)">↷ 跳过</button>
+    <button id="btnOut" title="跳出当前函数 (Shift+F11)">↗ 跳出函数</button>
+    <button id="btnOutClass" title="一直运行直到离开当前类">⇱ 跳出类</button>
+    <button id="btnOutModule" title="一直运行直到离开当前模块(文件)">⇲ 跳出模块</button>
+    <span class="sep"></span>
+    <button id="btnRestart" title="从入口重新开始">⟲ 重启</button>
+    <button id="btnGuide" title="重启并优先选择尚未覆盖的分支">✚ 下一条未覆盖路径</button>
+    <label class="speed" title="动画速度">速度<input id="speed" type="range" min="0" max="100" value="55"></label>
+    <label class="chk"><input id="optAnim" type="checkbox" checked>动画</label>
+    <label class="chk"><input id="optFollow" type="checkbox" checked>镜头跟随</label>
+    <label class="chk"><input id="optExt" type="checkbox">外部调用</label>
+    <span class="sep"></span>
+    <button id="btnFocus" title="专注模式：收起两侧栏和源码 (F)">⛶ 专注</button>
+    <button id="btnTheme" title="切换明暗主题" aria-label="切换明暗主题">◐</button>
+  </div>
+</header>
+<main class="layout">
+  <aside class="left side" data-side="left">
+    <button class="rail" data-toggle="left" title="展开/收起左栏 ([)" aria-label="展开/收起左栏"><span class="railIc">‹</span><span class="railTxt">入口 · 结构树</span></button>
+    <section class="panel entries" data-sec="entries">
+      <h2><button class="secBtn" aria-expanded="true">▾ 选择入口</button></h2>
+      <input id="entrySearch" type="search" placeholder="搜索 API / 组件 / 函数…" aria-label="搜索入口">
+      <div id="entryList" class="list" aria-label="入口列表"></div>
+    </section>
+    <section class="panel tree" data-sec="tree">
+      <h2><button class="secBtn" aria-expanded="true">▾ 结构树</button> <span class="muted small">目录 › 模块 › 类 › 函数</span></h2>
+      <div id="tree" class="list" role="tree"></div>
+    </section>
+  </aside>
+  <section class="center">
+    <nav id="crumbs" class="crumbs" aria-label="当前范围"></nav>
+    <div class="stage">
+      <svg id="map" role="img" aria-label="代码结构树图与调用流向" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker>
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <g id="tmLayer"></g>
+        <g id="staticLayer"></g>
+        <g id="trailLayer"></g>
+        <g id="flowLayer"></g>
+      </svg>
+      <div class="legend" aria-hidden="true">
+        <span><i class="sw cur"></i>当前</span><span><i class="sw stk"></i>调用栈</span><span><i class="sw vis"></i>已执行</span><span><i class="sw bp"></i>断点</span><span><i class="ln call"></i>调用</span><span><i class="ln http"></i>HTTP</span><span><i class="ln ret"></i>返回</span><span><i class="ln exc"></i>异常</span>
+      </div>
+      <div class="hint muted small">单击选中 · 双击进入容器 · 滚轮缩放 · 拖拽平移 · 右键函数切换断点</div>
+    </div>
+    <section class="source panel" data-sec="source">
+      <div class="srcResize" role="separator" aria-orientation="horizontal" aria-label="拖动调整源码面板高度"></div>
+      <div class="srcHead"><button class="secBtn" aria-expanded="true" title="展开/收起源码 (\)">▾</button><strong id="srcTitle">源码</strong><span id="srcLoc" class="muted small"></span></div>
+      <pre id="src" class="code" aria-label="源码，点击行号切换断点"></pre>
+    </section>
+  </section>
+  <aside class="right side" data-side="right">
+    <button class="rail" data-toggle="right" title="展开/收起右栏 (])" aria-label="展开/收起右栏"><span class="railIc">›</span><span class="railTxt">步骤 · 调用栈 · 详情</span></button>
+    <section class="panel step" data-sec="step">
+      <h2><button class="secBtn" aria-expanded="true">▾ 当前步骤</button></h2>
+      <div id="stepCard" class="stepCard" aria-live="polite"></div>
+      <div id="choices" class="choices"></div>
+    </section>
+    <section class="panel stack" data-sec="stack">
+      <h2><button class="secBtn" aria-expanded="true">▾ 调用栈</button></h2>
+      <ol id="stack" class="list"></ol>
+    </section>
+    <section class="panel tabs" data-sec="tabs">
+      <div class="tabbar" role="tablist">
+        <button class="secBtn" aria-expanded="true" title="展开/收起">▾</button>
+        <button role="tab" data-tab="trace" class="on">执行轨迹</button>
+        <button role="tab" data-tab="cov">分支覆盖</button>
+        <button role="tab" data-tab="bps">断点</button>
+        <button role="tab" data-tab="info">详情</button>
+      </div>
+      <div id="tab-trace" class="tabpane trace on"></div>
+      <div id="tab-cov" class="tabpane"></div>
+      <div id="tab-bps" class="tabpane"></div>
+      <div id="tab-info" class="tabpane"></div>
+    </section>
+  </aside>
+</main>
+<script>window.__CODEFLOW__ = /*__CODEFLOW_DATA__*/null;</script>
+<script>/*__CODEFLOW_JS__*/</script>
+</body>
+</html>
