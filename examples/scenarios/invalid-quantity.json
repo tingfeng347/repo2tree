@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "mode": "hypothetical",
+  "snapshot": "a067c52a16f474df5db7e2d6f68edc5d859159e2d42da27ef05cf5d32a9ba4f8",
+  "entry": "function:49fd2a45e38852a836748f7ebbee64fa",
+  "title": "API 下单：数量无效",
+  "inputs": {
+    "sku": "book",
+    "quantity": 0
+  },
+  "options": {
+    "maxDepth": 16
+  },
+  "responses": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "cursor": 13
+}

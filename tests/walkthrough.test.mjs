@@ -6,6 +6,18 @@ import { buildPresentation } from '../web/presentation.js';
 
 // Read the shipped snapshot only; never import or execute the shop application.
 const graph = JSON.parse(readFileSync(new URL('../examples/demo.project.json', import.meta.url), 'utf8'));
+
+test('README demo scenarios replay against the shipped snapshot', () => {
+  for (const [file, outcome, events] of [['order-success', 'completed', 94], ['invalid-quantity', 'raise', 14]]) {
+    const scenario = JSON.parse(readFileSync(new URL(`../examples/scenarios/${file}.json`, import.meta.url), 'utf8'));
+    const player = new Player(graph);
+    player.import(scenario);
+    assert.equal(player.status, 'done');
+    assert.equal(player.current.outcome, outcome);
+    assert.equal(player.history.length, events);
+  }
+});
+
 function finish(player) {
   for (let i = 0; i < 300 && player.status !== 'done'; i++) {
     const event = player.current;

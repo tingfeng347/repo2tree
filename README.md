@@ -11,6 +11,38 @@
 
 ## 演示
 
+### 三分钟体验：从前端下单到后端返回
+
+启动后点击「示例项目」，选择 `OrderPage`。每次推进先看当前语句和动作说明，遇到选择点再决定本次路径。以下是成功路径的主要调用关系（省略辅助调用）：
+
+```mermaid
+flowchart LR
+    UI[OrderPage] -->|手动触发 onClick| Submit[submitOrder]
+    Submit -->|确认 POST /api/orders 候选| API[create_order]
+    API --> Service[OrderService.create]
+    Service --> Validate[validate_quantity]
+    Service --> Inventory[Inventory.reserve]
+    Service --> Persist[persist → build_id]
+    Service --> Cleanup[finally → audit]
+```
+
+| 阶段 | 你做什么 | 演示重点 |
+| --- | --- | --- |
+| 选入口 | 选择 `OrderPage`，进入第一步 | 组件入口与函数源码对应 |
+| 触发事件 | 选择触发 `onClick`，确认异步主体和 API 候选 | 事件注册、回调执行与跨端调用分别讲解 |
+| 选择正常路径 | 数量错误条件不成立、SKU 存在、库存充足；循环进入一次后退出 | 分支由讲解者明确选择，输入备注不自动求值 |
+| 跟进调用 | 跟随 `persist` 进入嵌套函数 `build_id` | 调用帧、返回与 `finally` 清理过程 |
+| 比较和复盘 | 查看结束复盘，点击选择记录回退改选 | 改选后重建后续路径，保存不同教学场景 |
+
+也可以直接导入已完成的演示场景，查看复盘，再从时间线回到任意步骤：
+
+- [前端下单：成功路径](examples/scenarios/order-success.json)：94 个事件，13 次函数进入，包含回调、API 候选、嵌套函数和清理流程。
+- [API 下单：数量无效](examples/scenarios/invalid-quantity.json)：14 个事件，展示校验异常；回到 `quantity <= 0` 选择点改选，可继续探索成功路径。
+
+先点击「示例项目」，再在左下角「学习场景」中点击「导入」选择上述 JSON。不要使用顶部的「导入项目快照」：那里接收的是项目分析数据。场景绑定仓库自带的示例快照，重新扫描得到其他快照后应重新录制场景。这些记录来自静态播放器，未运行示例业务。
+
+### 界面预览
+
 从 API 进入服务方法，查看调用者、当前函数、下一目标和源码结构。右上角切换亮色／暗色，主题与面板布局保存在本地浏览器。
 
 ![亮色工作区：从下单 API 进入 OrderService.create](docs/images/walkthrough-light.jpg)
