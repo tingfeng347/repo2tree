@@ -180,6 +180,26 @@ typography:
     fontFamily: "\"Albert Sans\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif"
     fontSize: "11px"
     fontWeight: 400
+  diagram-title:
+    fontFamily: "\"Albert Sans\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif"
+    fontSize: "20px"
+    fontWeight: 650
+    lineHeight: 1.4
+    letterSpacing: "-.02em"
+  diagram-title-mobile:
+    fontFamily: "\"Albert Sans\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif"
+    fontSize: "18px"
+    fontWeight: 650
+    lineHeight: 1.4
+    letterSpacing: "-.02em"
+  diagram-label:
+    fontFamily: "\"Albert Sans\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif"
+    fontSize: "13px"
+    fontWeight: 550
+  diagram-index:
+    fontFamily: "\"SFMono-Regular\",Consolas,\"Liberation Mono\",monospace"
+    fontSize: "10px"
+    fontWeight: 400
 rounded:
   badge: "4px"
   control: "9px"
@@ -253,6 +273,11 @@ components:
     rounded: "{rounded.expression}"
     padding: "12px"
     typography: "{typography.label}"
+  diagram-operation:
+    backgroundColor: "{colors.panel}"
+    textColor: "{colors.text}"
+    rounded: "{rounded.expression}"
+    typography: "{typography.diagram-label}"
   type-label-api:
     backgroundColor: "{colors.tag-api-bg}"
     textColor: "{colors.tag-api-text}"
@@ -296,7 +321,7 @@ components:
 - 选择、候选、经过与异常同时使用文字、边框或线型表达。
 - 小型分类标签以有限暖色区分类型，选中行不改变标签色相。
 
-实现依据：`web/style.css`、`web/index.html`、`web/app.js`、`web/theme.js`。表面构图约定在 `.impeccable/surfaces/web-index-html.md`；frontmatter 是规范性 token 层，侧车补充交互与响应式信息。无生成式概念图；交付截图来自实际应用的 CUA 截图，`docs/images/*.jpg` 的来源信息已嵌入图片元数据。
+实现依据：`web/style.css`、`web/index.html`、`web/app.js`、`web/theme.js`，新增绘图见 `web/diagram.css`、`web/diagram-svg.js`、`web/diagram-workspace.js`。表面构图约定在 `.impeccable/surfaces/web-index-html.md`；frontmatter 是规范性 token 层，侧车补充交互与响应式信息。无生成式概念图；交付截图来自实际应用的 CUA 截图，`docs/images/*.jpg` 的来源信息已嵌入图片元数据。
 
 ## Colors
 
@@ -352,6 +377,7 @@ components:
 - **Body**：`body` 为界面基础；路径说明行高（1.85），最大行长（72ch），手机路径说明为（13px）。
 - **Code / expression / step**：对应 frontmatter 中同名角色，保留代码空白并允许长标识符换行；源码正文横向滚动。
 - **Label / metadata**：`label`、`metadata` 用于控件、来源、行号与状态；统计数字采用等宽数字排列。
+- **Diagram title / label / index**：`diagram-title` 与 `diagram-title-mobile` 用于新增三种图的标题；节点使用 `diagram-label`，辅助与连线标签沿用 `metadata` 字号，事件编号使用 `diagram-index`。图中文字保留界面字体，文件分组名与事件编号使用等宽字体。
 
 ## Layout
 
@@ -367,9 +393,11 @@ components:
 
 页面本身固定在窗口内；树、中央教学、时间线与源码各自在所属区域滚动。面板切换、聚焦布局和窗口缩放均同步辅助技术所读的展开状态。
 
+新增全景、时序与流程画布在局部双向滚动，不把整图压成手机宽度。全景与流程初始缩放为（85%–100%），时序为（100%）；“适应”按画布可用宽高计算，显式缩放范围为（15%–300%）。图视图页签在窄屏局部横向滚动；画布支持触控滚动、键盘聚焦和 Alt 拖动平移。
+
 ## Elevation & Depth
 
-界面无投影、无模糊玻璃、无装饰渐变。深度通过明度差、细边框、分隔线和布局位置建立。跳出菜单与手机命令菜单使用实心面板背景与细边框，保持与工作区一致的中性材质。
+工作区控件与面板无投影、无模糊玻璃、无装饰渐变。深度通过明度差、细边框、分隔线和布局位置建立。跳出菜单与手机命令菜单使用实心面板背景与细边框，保持与工作区一致的中性材质。新增 SVG 绘图节点仅使用极淡静态投影（`drop-shadow(0 3px 4px rgb(0 0 0 / .035))`）区分点阵画布；分组与工作区仍保持平面。
 
 **The Flat Surface Rule.** 悬停改变表面和描边；不使用悬浮位移或阴影替代可见状态。
 
@@ -399,6 +427,12 @@ components:
 
 路径节点采用 `journey-node` 圆角和实心面板，当前函数反转前景与背景，来源路径和调用帧使用专门的反差辅助字。候选目标用透明底、虚线边框和暖色状态。异常改变边框或连接线颜色，不改变调用语义。函数流程卡片与源码表达式使用 `expression` 圆角，活动步骤通过当前源码表面和描边识别。
 
+### Diagram Views
+
+新增三种图共用 Archify 参考的绘图语法，并继承现有工作区与 tone 配色。画布点阵间距（22px）；全景文件分组采用浅面板与虚线框，普通操作节点使用 `diagram-operation`，条件使用菱形，开始／结束使用胶囊形。上下小端口与折线路由表达连接；时序使用虚线生命线、细活动条和编号消息，返回与候选连线保留虚线。角色底色与描边使用 call、branch、return、exception 成对 tone 色，普通节点保持中性；不使用分类标签的 `tag-*` 颜色填充节点。
+
+节点选中使用中性描边（2.3px），悬停与键盘焦点使用 `focus` 描边（2px）。节点、时序消息与备注均可键盘到达并激活；裁切标签的完整文字保留在 SVG title 与检查栏说明中。时序消息属于本次手动选择路径，不能表示真实运行；全景与流程保留来源及候选关系说明。SVG 导出携带当前主题变量与绘图 CSS。
+
 ### Manual Branch Choice
 
 选择在当前语句下方与步骤检查栏同时可达。中央选择默认两列，窄画布单列；选项允许多行，暖色序号与描边提示尚待选择。不要把已展示的其他分支当作本轮经过记录。
@@ -423,7 +457,7 @@ components:
 - **Don't** 重新引入绿色、蓝色 UI，或从参考站的彩色艺术图提取状态色。
 - **Don't** 把每个节点都渲染成与当前函数同权重的实心反差块。
 - **Don't** 将标签色扩散到工作区、按钮或图节点，也不要使用紫色或黄色分类标签。
-- **Don't** 用阴影、玻璃或循环装饰动画增加界面噪声。
+- **Don't** 向工作区控件与面板添加投影、玻璃或循环装饰动画；SVG 节点只保留已记录的极淡静态投影。
 - **Don't** 用颜色或运动单独传递可操作性、当前位置或分支语义。
 - **Don't** 把假设路径、静态分支探索率或输入备注表现为已验证的运行结果。
 
@@ -436,3 +470,11 @@ components:
 保留字体、配色、四种视图和断点操作。本轮调整阅读顺序：未开始时展示可选入口；演示中先显示当前语句的说明、具体动作或分支选项，然后显示调用链与节点图。源码结构和调用记录用原生 details 默认折叠，展开偏好在本次演示的单步间保留。最近三次选择提供“回到此处改选”，目标是等待选择事件。结束页展示本次统计、保存场景及重新演示，不展示失效的下一步按钮。手机标题不固定在顶部，避免长入口名挤压操作区域。
 
 本轮新增组件复用现有中性和 tone 色，无新增配色。新入口／复盘标题为 26px（手机 23px），提示动作标题 16px（手机 14px）；列表沿细分隔线排列，不增加装饰卡片。浏览器验收受策略限制，未声明本轮视觉验证通过。
+
+## Diagram views
+
+2026-11-07：用户要求全景图、时序图、流程图，绘图参考 Archify。工作区主题保持既有黑白石色。图表复用 call、branch、return、exception 的暖色语义，不引入新的全局主色。
+
+绘图使用点阵画布、带虚线边框的文件分组、圆角操作节点、菱形条件节点、上下端口和折线路由；时序使用竖直虚线生命线与细活动条。选中节点用中性 2.3px 描边，hover／keyboard focus 使用既有 focus 色。图内文字默认 13px，辅助与路由标签 11px，事件编号 10px；完整文本保留在 title 和右侧说明。手机图标题 18px，延续工作区紧凑标题尺度。
+
+大图按可读的初始缩放在图内滚动，全景与流程默认 85%–100%，时序默认 100%；主动“适应”可缩小整体。图表工具与空态沿用原生按钮和提示系统。新增页签在窄屏局部横向滚动，页面本身不横向溢出。SVG 导出内嵌当前主题变量和绘图样式；离线模式同样支持。规范性字号与组件见 frontmatter、Typography 和 Components，交互示例见侧车的新增绘图组件。

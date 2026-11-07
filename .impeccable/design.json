@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-17T11:58:40.428868+00:00",
+  "generatedAt": "2026-11-07T15:31:38.161711+00:00",
   "title": "Design System: repo2tree",
   "extensions": {
     "colorMeta": {
@@ -1595,9 +1595,31 @@
       "metadata": {
         "displayName": "Metadata",
         "purpose": "来源、行号、辅助状态。"
+      },
+      "diagram-title": {
+        "displayName": "Diagram Title",
+        "purpose": "全景、时序与流程图的标题。"
+      },
+      "diagram-title-mobile": {
+        "displayName": "Mobile Diagram Title",
+        "purpose": "不超过620px时的图标题。"
+      },
+      "diagram-label": {
+        "displayName": "Diagram Label",
+        "purpose": "SVG节点的主标签。"
+      },
+      "diagram-index": {
+        "displayName": "Diagram Index",
+        "purpose": "时序消息的等宽事件编号。"
       }
     },
-    "shadows": [],
+    "shadows": [
+      {
+        "name": "diagram-node-filter",
+        "value": "drop-shadow(0 3px 4px rgb(0 0 0 / .035))",
+        "purpose": "仅新增SVG节点的极淡静态分层；工作区面板与控件保持平面。"
+      }
+    ],
     "motion": [
       {
         "name": "control-state",
@@ -1811,7 +1833,10 @@
       "web/app.js",
       "web/theme.js",
       "PRODUCT.md",
-      ".impeccable/surfaces/web-index-html.md"
+      ".impeccable/surfaces/web-index-html.md",
+      "web/diagram.css",
+      "web/diagram-svg.js",
+      "web/diagram-workspace.js"
     ],
     "fontProvenance": {
       "path": "web/fonts/AlbertSans.ttf",
@@ -1917,6 +1942,19 @@
       "choices": "links seek original choice event; Player.choose resumes navigation",
       "review": "Unit and snapshot scenario tests passed; browser visual verification blocked by URL policy",
       "date": "2026-10-17"
+    },
+    "diagramViews": {
+      "scope": "全景、时序、流程的普通增量；沿用中性工作区与既有tone角色色。",
+      "grid": "22px dot pattern",
+      "zoom": {
+        "overviewInitial": "85%–100%",
+        "flowInitial": "85%–100%",
+        "sequenceInitial": "100%",
+        "range": "15%–300%",
+        "fit": "Explicit fit uses available canvas width and height."
+      },
+      "interaction": "局部双向滚动，Alt拖动平移；SVG节点、消息和备注可键盘聚焦及激活。选中描边2.3px；hover/focus描边2px。",
+      "semantics": "候选与返回采用虚线；时序来自手动假设路径，非真实执行。SVG导出内嵌当前主题变量和绘图CSS。"
     }
   },
   "components": [
@@ -1999,6 +2037,14 @@
       "description": "五种克制暖色仅用于小型分类标签；API 示例行已选中，分类色保持稳定。",
       "html": "<div class=\"ds-taxonomy\"><button class=\"ds-tag-entry ds-selected\"><small class=\"ds-tag-api\">API</small><span>create_order</span></button><button class=\"ds-tag-entry\"><small class=\"ds-tag-ui\">UI</small><span>OrderForm</span></button><button class=\"ds-tag-entry\"><small class=\"ds-tag-function\">fn</small><span>load_product</span></button><div class=\"ds-tag-tree\"><span class=\"ds-kind ds-tag-type\">class</span> OrderService</div><div class=\"ds-tag-tree\"><span class=\"ds-kind ds-tag-module\">module</span> orders</div></div>",
       "css": ".ds-taxonomy{font-family:var(--font,\"Albert Sans\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif);color:var(--text,#262626)}.ds-tag-entry{font-family:var(--font,\"Albert Sans\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif);display:flex;align-items:flex-start;gap:8px;width:100%;border:0;border-radius:8px;background:transparent;color:var(--text,#262626);padding:9px 8px;text-align:left;cursor:pointer;transition:background-color .15s ease-out}.ds-tag-entry.ds-selected{background:var(--selected-bg,#ecece7);color:var(--selected-text,#262626)}.ds-tag-entry:hover{background:var(--hover-bg,#eeeee9)}.ds-tag-entry:focus-visible{outline:2px solid var(--focus,#985341);outline-offset:3px}.ds-tag-entry small{font-family:var(--font,\"Albert Sans\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif);font-size:11px;line-height:1.5;font-weight:650;margin-top:1px;padding:1px 4px;border-radius:4px;min-width:23px;text-align:center}.ds-tag-entry>span{font:11px var(--mono,\"SFMono-Regular\",Consolas,\"Liberation Mono\",monospace)}.ds-tag-tree{display:flex;align-items:center;gap:7px;padding:4px;font-size:12px}.ds-kind{font-family:var(--font,\"Albert Sans\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif);font-size:11px;padding:2px 4px;border-radius:3px}.ds-tag-api{background:var(--tag-api-bg,#9b4d42);color:var(--tag-api-text,#fff9f6)}.ds-tag-ui{background:var(--tag-ui-bg,#8b6545);color:var(--tag-ui-text,#fffaf4)}.ds-tag-function{background:var(--tag-function-bg,#f1e4dc);color:var(--tag-function-text,#79452c)}.ds-tag-type{background:var(--tag-type-bg,#86535b);color:var(--tag-type-text,#fff7f8)}.ds-tag-module{background:var(--tag-module-bg,#e9e7e3);color:var(--tag-module-text,#655d54)}@media(prefers-reduced-motion:reduce){.ds-tag-entry{transition:none}}"
+    },
+    {
+      "name": "绘图节点与条件",
+      "kind": "custom",
+      "refersTo": "diagram-operation",
+      "description": "三种图共用的点阵画布、文件分组、端口、折线路由与条件菱形；Tab可查看焦点反馈。",
+      "html": "<svg class=\"ds-diagram\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 520 300\" role=\"group\" aria-label=\"绘图语法示例\"><defs><pattern id=\"ds-diagram-grid\" width=\"22\" height=\"22\" patternUnits=\"userSpaceOnUse\"><circle class=\"ds-diagram-dot\" cx=\"1\" cy=\"1\" r=\".8\"/></pattern><marker id=\"ds-diagram-arrow\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto\"><path class=\"ds-diagram-arrow\" d=\"M1 1 9 5 1 9\"/></marker></defs><rect class=\"ds-diagram-surface\" width=\"520\" height=\"300\" rx=\"18\"/><rect width=\"520\" height=\"300\" fill=\"url(#ds-diagram-grid)\"/><rect class=\"ds-diagram-group\" x=\"24\" y=\"22\" width=\"472\" height=\"254\" rx=\"18\"/><text class=\"ds-diagram-group-label\" x=\"44\" y=\"49\">src/checkout.ts</text><path class=\"ds-diagram-wire\" d=\"M158 148V210H314\" marker-end=\"url(#ds-diagram-arrow)\"/><g class=\"ds-diagram-node\" tabindex=\"0\" role=\"button\" aria-label=\"validateCart，调用节点\"><title>validateCart · L12 · call</title><rect class=\"ds-diagram-shape\" x=\"55\" y=\"78\" width=\"206\" height=\"70\" rx=\"12\"/><text class=\"ds-diagram-label\" x=\"158\" y=\"108\">validateCart</text><text class=\"ds-diagram-caption\" x=\"158\" y=\"131\">L12 · call</text><circle class=\"ds-diagram-port\" cx=\"158\" cy=\"78\" r=\"2.5\"/><circle class=\"ds-diagram-port\" cx=\"158\" cy=\"148\" r=\"2.5\"/></g><g class=\"ds-diagram-node ds-diagram-branch\" tabindex=\"0\" role=\"button\" aria-label=\"cart.valid?，手动选择条件\"><title>cart.valid? · 条件不会自动求值</title><path class=\"ds-diagram-shape\" d=\"M394 160 474 210 394 260 314 210Z\"/><text class=\"ds-diagram-label\" x=\"394\" y=\"206\">cart.valid?</text><text class=\"ds-diagram-caption\" x=\"394\" y=\"225\">手动选择</text><circle class=\"ds-diagram-port\" cx=\"394\" cy=\"160\" r=\"2.5\"/><circle class=\"ds-diagram-port\" cx=\"394\" cy=\"260\" r=\"2.5\"/></g></svg>",
+      "css": ".ds-diagram{display:block;width:100%;max-width:520px;font-family:var(--font,\"Albert Sans\",\"PingFang SC\",sans-serif);color:var(--text,#262626)}.ds-diagram-surface{fill:var(--panel,#fff);stroke:var(--line,#e2e1dc)}.ds-diagram-dot{fill:var(--line,#e2e1dc)}.ds-diagram-group{fill:var(--panel2,#f0f0ed);fill-opacity:.55;stroke:var(--node-border,#cccac0);stroke-dasharray:5 5}.ds-diagram-group-label{font:550 12px var(--mono,monospace);fill:var(--muted,#68665f)}.ds-diagram-node{outline:none;cursor:pointer}.ds-diagram-shape{fill:var(--tone-call-bg,#faece3);stroke:var(--tone-call-border,#d3aa94);stroke-width:1.3;filter:drop-shadow(0 3px 4px rgb(0 0 0 / .035))}.ds-diagram-branch .ds-diagram-shape{fill:var(--tone-branch-bg,#f8eaed);stroke:var(--tone-branch-border,#c79ba6)}.ds-diagram-node:hover .ds-diagram-shape,.ds-diagram-node:focus-visible .ds-diagram-shape{stroke:var(--focus,#985341);stroke-width:2}.ds-diagram-label{font-size:13px;font-weight:550;fill:var(--text,#262626);text-anchor:middle;pointer-events:none}.ds-diagram-caption{font-size:11px;fill:var(--muted,#68665f);text-anchor:middle;pointer-events:none}.ds-diagram-port{fill:var(--panel,#fff);stroke:var(--node-border,#cccac0);stroke-width:1}.ds-diagram-wire{fill:none;stroke:var(--edge-color,#8a887d);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}.ds-diagram-arrow{fill:none;stroke:var(--edge-color,#8a887d);stroke-width:1.5;stroke-linejoin:round}"
     }
   ],
   "narrative": {
@@ -2045,7 +2091,7 @@
       "Don't 重新引入绿色、蓝色 UI，或从参考站的彩色艺术图提取状态色。",
       "Don't 把每个节点都渲染成与当前函数同权重的实心反差块。",
       "Don't 将标签色扩散到工作区、按钮或图节点，也不要使用紫色或黄色分类标签。",
-      "Don't 用阴影、玻璃或循环装饰动画增加界面噪声。",
+      "Don't 向工作区控件与面板添加投影、玻璃或循环装饰动画；SVG 节点只保留已记录的极淡静态投影。",
       "Don't 用颜色或运动单独传递可操作性、当前位置或分支语义。",
       "Don't 把假设路径、静态分支探索率或输入备注表现为已验证的运行结果。"
     ]
