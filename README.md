@@ -62,7 +62,7 @@ flowchart LR
 
 ## 启动
 
-需要 Rust、Python 3.10+、Node.js 和 [CodeGraph CLI](https://github.com/colbymchenry/codegraph)。CodeGraph 在本机已安装；本仓库已验证的版本是 1.6.0。
+需要 Rust、Python 3.10+、Node.js 和 [CodeGraph CLI](https://github.com/colbymchenry/codegraph)。CodeGraph 在本机已安装；本仓库已验证的版本是 1.6.0。macOS 系统自带的 `python3` 可能低于 3.10；请确认当前终端 PATH 中的 `python3 --version` 满足要求，否则 Python 控制流解析会失败。
 
 ```sh
 npm ci
@@ -87,6 +87,24 @@ cargo run -- scan --project /absolute/path/to/project --out project.json
 扫描时会显示读取索引、读取源码、解析语言及关联调用等阶段；可随时取消。取消会停止本次解析子进程，保留当前已打开的项目，随后可重试；刷新页面会重新连接正在进行的扫描。开发调试可省略 `--release`，较大项目建议使用优化构建。
 
 网页内可以导入项目快照，保存、导出和导入场景 JSON。场景绑定源码快照；源码变化后不会把旧选择套到新行号上。
+
+## 导出离线代码地图
+
+点击顶部「打开项目」→「导出离线地图」，会下载 `repo2tree-map.html`。双击即可离线打开，不需要启动 Rust 服务，也不需要 Python、Node 或 CodeGraph。文件包含当前快照中的源码、语法高亮、字体及当前演示场景；分享此文件也会分享其中源码。
+
+离线页面沿用完整工作区，可浏览结构／调用关系、阅读源码、继续手动选分支，通过时间线回退改选，并导入／导出场景 JSON。扫描本地目录需要返回在线工作区。仅打包当前场景，浏览器中其他已保存场景可分别导出。导出前没有选择入口时，离线页面从入口选择界面开始。建议使用支持 import map 的现代 Chrome、Edge、Firefox 或 Safari；本轮实测 Chrome。
+
+本轮参考 [xfg-coding-map-skills](https://github.com/fuzhengwei/xfg-coding-map-skills) 的数据与渲染分离、三栏联动和离线交付思路。repo2tree 用稳定符号 ID 连接树、地图和源码，并复用手动选择的场景作为导览；实现与静态播放器共用同一套模块。
+
+## 三种图表
+
+中央页签增加「全景图」「时序图」「流程图」，绘图参考 Archify 的分组框、节点端口、折线路由和生命线，并沿用本项目的黑白石色主题与局部暖色语义标记。
+
+- **全景图**：按源码文件分组，类聚合其方法，顶层函数聚合闭包；箭头来自静态调用证据，候选使用虚线。点击节点联动左树、源码和右侧「说明」。
+- **时序图**：先推进演示或导入场景。每次调用有独立生命线，返回只在调用退出后出现；选择、边界与清理步骤作为说明。点击消息回到对应事件；回退后只显示当前游标之前的记录。纵轴是教学事件次序，不表示耗时或真实并发。
+- **流程图**：从左侧选择函数，查看条件菱形、循环回边、异常处理和 `finally`；点击步骤可查看原始语句与源码位置。未解析调用保留边界；尚未适配的语言会显示提示。
+
+图表工具提供「适应」、100%、缩放与「导出 SVG」。大图保留可读字号，在图内滚动查看；Ctrl／⌘ + 滚轮缩放，Alt + 拖动平移。全景和时序按页展示，数量与页码可见。SVG 包含当前主题样式；HTML 离线地图包含三种视图，并恢复导出时的视图、所选符号和页码。
 
 ## 怎么用
 
@@ -151,6 +169,12 @@ python3 tests/scan_http.py target/debug/repo2tree
 # 启动服务后：Chrome 独立临时用户目录，不使用日常浏览器配置
 node tests/browser_integration.mjs http://127.0.0.1:7331
 
+# 在线联动、实际 HTML 导出、断网 file:// 场景恢复与小屏检查
+node tests/map_browser.mjs http://127.0.0.1:7331
+
+# 三图、SVG 导出、时序分页/回看、离线恢复与手机布局
+node tests/diagram_browser.mjs http://127.0.0.1:7331
+
 # 重建示例快照
 cargo run -- scan --project examples/shop --index --out examples/demo.project.json
 ```
@@ -163,6 +187,7 @@ cargo run -- scan --project examples/shop --index --out examples/demo.project.js
 - [架构与控制流模型](docs/architecture.md)：数据、语义、模块职责及扩展方向。
 - `src/`：Rust CLI、本机 HTTP 服务、只读 CodeGraph 导入、可选 LSP。
 - `adapters/`：只解析源码的 Python／TypeScript 适配器。
+- `web/project-model.js`：快照校验、结构投影、调用证据与邻域索引；`web/offline.js`：复用工作区的离线打包。
 - `web/engine.js`：独立可测试的确定性播放器；`web/presentation.js` 统一步骤说明、下一步动作与按调用帧隔离的展示状态；`web/app.js` 组织界面，`style.css` 实现参考 OpenDesign 的中性色明暗主题、分组控件与自适应演示布局。
 - `examples/shop/`：示例源码；`examples/demo.project.json`：可重复生成的静态快照。
 
