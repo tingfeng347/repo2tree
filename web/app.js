@@ -1,14 +1,17 @@
 import { Player, allDecisions } from './engine.js';
+import { createProjectModel, functionKinds, walkFlow as walk } from './project-model.js';
+import { collectOfflineAssets, offlineHtml } from './offline.js';
 import { buildPresentation, eventNames, eventTone } from './presentation.js';
 import { highlightCode, sourceDocument, clearSyntaxCache } from './syntax.js';
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const escape = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
-const functionKinds = new Set(['function', 'method', 'constructor', 'lambda', 'closure']);
+const embedded = document.querySelector('#repo2tree-data');
+const offline = embedded ? JSON.parse(embedded.textContent) : null;
 const kindNames = { project: '项目', directory: '目录', file: '模块', module: '模块', class: '类', struct: '结构体', function: '函数', method: '方法', constructor: '构造', lambda: '匿名函数', interface: '接口' };
 const code = (text, id) => { const node = nodes?.get(id); return highlightCode(text, node?.path, node?.language); };
-let graph, player, nodes, children, visualEdges, selected, scope, view = 'journey', panel = 'step', callsAnchor;
+let graph, projectModel, player, nodes, children, visualEdges, selected, scope, view = 'journey', panel = 'step', callsAnchor;
 let journeyEvent = '';
 const journeyDetails = new Set();
 let entryLimit = 80, mapPage = 0, sourceKey = '', saved = [], saveCoverage = new Map();
@@ -39,25 +42,14 @@ window.addEventListener('storage', event => { if (event.key === 'repo2tree:theme
 const projectKey = () => `repo2tree:v1:${graph.snapshot.id}`;
 const label = id => nodes.get(id)?.qualifiedName || nodes.get(id)?.name || id || '';
 const isFunction = id => functionKinds.has(nodes.get(id)?.kind);
-const structuralKinds = new Set(['project', 'directory', 'file', 'module', 'namespace', 'class', 'struct', 'interface', 'enum', ...functionKinds]);
-const ancestors = id => player.ancestors(id);
-function walk(ops, fn) { for (const op of ops || []) { fn(op); for (const k of ['body', 'elseBody', 'finallyBody', 'conditionBody', 'incrementBody']) walk(op[k], fn); for (const k of ['arms', 'handlers']) for (const arm of op[k] || []) walk(arm.body, fn); } }
+const ancestors = id => projectModel.ancestors(id);
 
 function loadGraph(data) {
-  if (data.schemaVersion !== 1 || !Array.isArray(data.nodes) || !data.flows || typeof data.snapshot?.id !== 'string' || !Array.isArray(data.edges) || !Array.isArray(data.entries) || !Array.isArray(data.diagnostics) || !data.stats || !data.sources || typeof data.project?.name !== 'string' || !data.nodes.some(n => n.id === data.root) || data.nodes.some(n => typeof n.id !== 'string' || typeof n.name !== 'string' || typeof n.kind !== 'string') || Object.values(data.flows).some(flow => !Array.isArray(flow))) throw new Error('项目快照格式不支持；请用 repo2tree scan 重新生成。');
-  pause(); resumePlayback = false; journeyDetails.clear(); view = 'journey'; clearSyntaxCache(); graph = data; player = new Player(graph); nodes = player.nodes; children = new Map();
-  for (const n of graph.nodes.filter(n => structuralKinds.has(n.kind))) {
-    const parent = player.ancestors(n.parent).find(id => structuralKinds.has(nodes.get(id)?.kind)) || n.parent;
-    if (!children.has(parent)) children.set(parent, []); children.get(parent).push(n.id);
-  }
-  for (const ids of children.values()) ids.sort((a, b) => {
-    const rank = id => (children.get(id)?.length ? 0 : isFunction(id) ? 1 : 2);
-    return rank(a) - rank(b) || label(a).localeCompare(label(b));
-  });
-  const seen = new Map();
-  for (const e of graph.edges || []) if (['calls', 'instantiates'].includes(e.kind) && nodes.has(e.source) && nodes.has(e.target)) seen.set(`${e.source}:${e.target}`, e);
-  for (const [id, ops] of Object.entries(graph.flows)) walk(ops, op => { for (const t of op.targets || []) seen.set(`${id}:${t.id}`, { source: id, target: t.id, kind: op.kind, status: t.status, origin: t.origin, line: op.line }); });
-  visualEdges = [...seen.values()];
+  // Build and validate before replacing the open project or stopping its player.
+  const model = createProjectModel(data);
+  pause(); resumePlayback = false; journeyDetails.clear(); view = 'journey'; clearSyntaxCache();
+  graph = data; projectModel = model; player = new Player(graph);
+  ({nodes, children, edges:visualEdges} = model);
   scope = graph.root; selected = graph.root; callsAnchor = graph.root; mapPage = 0; sourceKey = ''; box = { x: 0, y: 0, w: 1100, h: 660 };
   const bp = localGet(projectKey() + ':breakpoints', {});
   player.breakpoints = new Set(Array.isArray(bp.functions) ? bp.functions : []);
@@ -87,20 +79,55 @@ function treeNode(id) {
   return children.get(id)?.length ? `<details data-tree="${escape(id)}"><summary>${button}</summary><div class="tree-children"></div></details>` : button;
 }
 function renderTree() {
+  revealed = null;
   $('#tree').innerHTML = (children.get(graph.root) || []).map(treeNode).join('') || '<p class="empty">索引中没有子符号。</p>';
 }
+function expandTree(details, through = 300) {
+  const ids = children.get(details.dataset.tree) || [];
+  const limit = Math.max(Number(details.dataset.loaded) || 0, through);
+  if (!details.dataset.loaded || Number(details.dataset.loaded) < Math.min(ids.length, limit)) {
+    details.querySelector('.tree-children').innerHTML = ids.slice(0, limit).map(treeNode).join('') +
+      (ids.length > limit ? `<button data-more-tree="${escape(details.dataset.tree)}" data-offset="${limit}">继续显示（还有 ${ids.length - limit}）</button>` : '');
+    details.dataset.loaded = String(Math.min(ids.length, limit));
+  }
+}
 $('#tree').addEventListener('toggle', e => {
-  if (e.target.tagName !== 'DETAILS' || !e.target.open || e.target.dataset.loaded) return;
-  const ids = children.get(e.target.dataset.tree) || [];
-  e.target.querySelector('.tree-children').innerHTML = ids.slice(0, 300).map(treeNode).join('') + (ids.length > 300 ? `<button data-more-tree="${escape(e.target.dataset.tree)}" data-offset="300">继续显示（还有 ${ids.length - 300}）</button>` : '');
-  e.target.dataset.loaded = 'true';
+  if (e.target.tagName === 'DETAILS' && e.target.open) expandTree(e.target);
 }, true);
+let revealed;
+function revealSelection() {
+  if (revealed === selected) return;
+  revealed = selected;
+  // Follow the projected ancestry, including parents hidden by the structural filter.
+  const path = [];
+  let id = selected;
+  while (id && id !== graph.root) {
+    path.unshift(id);
+    id = projectModel.parents.get(id) || graph.root;
+  }
+  let container = $('#tree');
+  for (let i = 0; i < path.length - 1; i++) {
+    const details = [...container.children].find(el => el.dataset.tree === path[i]);
+    if (!details) break;
+    details.open = true;
+    const siblings = children.get(path[i]) || [];
+    expandTree(details, Math.max(300, Math.ceil((siblings.indexOf(path[i + 1]) + 1) / 300) * 300));
+    container = details.querySelector('.tree-children');
+  }
+  let active;
+  for (const button of $$('#tree [data-symbol]')) {
+    const match = button.dataset.symbol === selected;
+    button.classList.toggle('selected', match); button.setAttribute('aria-selected', String(match));
+    if (match) active = button;
+  }
+  // Do not scroll the entire document when the left pane is collapsed on mobile.
+  if (active && $('.left-pane .pane-content').getBoundingClientRect().width) active.scrollIntoView({block:'nearest'});
+}
 
 function selectNode(id, locate = false) {
   if (!nodes.has(id)) return;
   selected = id; callsAnchor = id; sourceKey = '';
-  if (locate) setScope(children.get(id)?.length ? id : nodes.get(id)?.parent || graph.root);
-  for (const button of $$('#tree [data-symbol]')) button.classList.toggle('selected', button.dataset.symbol === selected);
+  if (locate) setScope(children.get(id)?.length ? id : projectModel.parents.get(id) || graph.root);
   render();
 }
 function setScope(id) { scope = id; mapPage = 0; box = { x: 0, y: 0, w: 1100, h: 660 }; }
@@ -227,7 +254,7 @@ function renderMap(model = buildPresentation(graph, player)) {
   }
   if (view === 'calls') {
     const center = nodes.has(callsAnchor) ? callsAnchor : player.entry || selected;
-    const relevant = visualEdges.filter(e => e.source === center || e.target === center);
+    const relevant = [...(projectModel.incoming.get(center) || []), ...(projectModel.outgoing.get(center) || [])];
     const left = [...new Set(relevant.filter(e => e.target === center).map(e => e.source))].filter(id => id !== center);
     const right = [...new Set(relevant.filter(e => e.source === center).map(e => e.target))].filter(id => id !== center);
     count = left.length + right.length + 1; pages = Math.max(1, Math.ceil(Math.max(left.length, right.length) / 8)); mapPage = Math.min(mapPage, pages - 1);
@@ -358,6 +385,7 @@ function render() {
   if (!graph) return;
   $('#breadcrumbs').innerHTML = ancestors(scope).reverse().map((id, i) => `${i ? '<span>/</span>' : ''}<button data-scope="${escape(id)}">${escape(nodes.get(id)?.name || id)}</button>`).join('');
   $('#scope-description').textContent = view === 'journey' ? '跟随调用、分支与返回 · 在中央直接选择路径' : view === 'calls' ? '函数邻域 · 保留边的分析来源' : view === 'flow' ? '函数内步骤 · 分支按源码嵌套' : '双击进入 · 滚轮缩放 · 拖动画布';
+  revealSelection();
   const model = buildPresentation(graph, player);
   renderMap(model); renderStep(model); renderSource();
   if (panel === 'coverage') renderCoverage();
@@ -408,7 +436,8 @@ function choosePath(selection) {
 }
 function persistBreakpoints() { localSet(projectKey() + ':breakpoints', { functions: [...player.breakpoints], lines: [...player.lineBreakpoints] }); sourceKey = ''; render(); }
 function inputs() { try { return JSON.parse($('#scenario-input').value); } catch { throw new Error('场景输入不是有效 JSON，请先修正。'); } }
-function exportFile(filename, data) { const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })); const a = document.createElement('a'); a.href = url; a.download = filename; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
+function downloadFile(filename, content, type) { const url = URL.createObjectURL(new Blob([content], { type })); const a = document.createElement('a'); a.href = url; a.download = filename; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
+function exportFile(filename, data) { downloadFile(filename, JSON.stringify(data, null, 2), 'application/json'); }
 async function readFile(input) { const file = input.files[0]; if (!file) return null; if (file.size > 100 * 1024 * 1024) throw new Error('文件超过 100 MB，请使用本地扫描服务打开。'); return JSON.parse(await file.text()); }
 function loadScenario(scenario) { const restored = new Player(graph); restored.import(scenario); restored.breakpoints = player.breakpoints; restored.lineBreakpoints = player.lineBreakpoints; pause(); resumePlayback = false; player = restored; view = 'journey'; journeyDetails.clear(); const depth=String(player.options.maxDepth); if (![...$('#max-depth').options].some(o=>o.value===depth)) $('#max-depth').add(new Option(depth,depth)); $('#max-depth').value=depth; $('#scenario-input').value = JSON.stringify(scenario.inputs, null, 2); $('#scenario-title').value = scenario.title; callsAnchor = player.entry; followCurrent(); renderEntries(); render(); }
 
@@ -433,7 +462,7 @@ document.addEventListener('click', e => {
   if (b.dataset.scenario != null) { try { loadScenario(saved[Number(b.dataset.scenario)]); } catch (error) { notify(error.message, true); } }
   if (b.dataset.deleteScenario != null) { saved.splice(Number(b.dataset.deleteScenario), 1); localSet(projectKey() + ':scenarios', saved); saveCoverage.clear(); renderScenarios(); render(); }
   if (b.id === 'more-entries') { entryLimit += 80; renderEntries(); }
-  if (b.dataset.moreTree) { const ids = children.get(b.dataset.moreTree) || [], offset = Number(b.dataset.offset); b.insertAdjacentHTML('beforebegin', ids.slice(offset, offset + 300).map(treeNode).join('')); if (offset + 300 < ids.length) { b.dataset.offset = offset + 300; b.textContent = `继续显示（还有 ${ids.length - offset - 300}）`; } else b.remove(); }
+  if (b.dataset.moreTree) { const ids = children.get(b.dataset.moreTree) || [], offset = Number(b.dataset.offset); b.insertAdjacentHTML('beforebegin', ids.slice(offset, offset + 300).map(treeNode).join('')); b.closest('details').dataset.loaded = String(Math.min(ids.length, offset + 300)); if (offset + 300 < ids.length) { b.dataset.offset = offset + 300; b.textContent = `继续显示（还有 ${ids.length - offset - 300}）`; } else b.remove(); }
 });
 $('#atlas').addEventListener('click', e => { const id = e.target.closest('[data-symbol]')?.dataset.symbol; if (id) selectNode(id); });
 $('#atlas').addEventListener('dblclick', e => {
@@ -457,6 +486,20 @@ $('#scenario-export').onclick = () => { try { if (player.entry) exportFile('repo
 $('#scenario-import').onchange = async e => { try { const s = await readFile(e.target); if (s) loadScenario(s); } catch (error) { notify(error.message, true); } finally { e.target.value = ''; } };
 $('#project-import').onchange = async e => { try { const g = await readFile(e.target); if (g) { loadGraph(g); notify('已在浏览器中打开项目快照。'); } } catch (error) { notify(error.message, true); } finally { e.target.value = ''; } };
 $('#max-depth').onchange = () => { if (player?.entry) { start(player.entry); notify('展开深度已更改，当前路径已重置，确保保存场景可以准确回放。'); } };
+
+$('#map-export').onclick = async () => {
+  const button = $('#map-export');
+  try {
+    pause(); resumePlayback = false; render();
+    const snapshot = graph, scenario = player.entry ? player.export(inputs(), $('#scenario-title').value.trim() || '未命名场景') : null;
+    const theme = document.documentElement.dataset.theme;
+    button.disabled = true; button.textContent = '正在打包…';
+    const resources = await collectOfflineAssets();
+    downloadFile('repo2tree-map.html', offlineHtml(snapshot, resources, {scenario, theme}), 'text/html;charset=utf-8');
+    notify('离线地图已导出，包含当前项目源码和演示场景；双击 HTML 即可打开。');
+  } catch (error) { notify(error.message, true); }
+  finally { button.disabled = false; button.textContent = '导出离线地图'; }
+};
 
 $('#project-toggle').onclick = () => { const open = $('#project-bar').hidden; $('#project-bar').hidden = !open; $('#project-toggle').setAttribute('aria-expanded', String(open)); };
 async function request(url, body) { const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); const data = await response.json(); if (!response.ok) throw new Error(data.error || `请求失败 ${response.status}`); return data; }
@@ -539,7 +582,7 @@ function toggleSource() { const collapsed = document.body.classList.toggle('no-s
 $('#source-toggle').onclick = toggleSource;
 let beforeFocus = null;
 $('#focus-toggle').onclick = () => { if (!beforeFocus) { beforeFocus = [document.body.classList.contains('no-left'), document.body.classList.contains('no-right'), document.body.classList.contains('no-source')]; document.body.classList.add('no-left', 'no-right', 'no-source'); $('#focus-toggle').textContent = '恢复布局'; } else { ['no-left', 'no-right', 'no-source'].forEach((cls, i) => document.body.classList.toggle(cls, beforeFocus[i])); beforeFocus = null; $('#focus-toggle').textContent = '专注'; } syncPanelControls(); saveLayout(); };
-$('#locate').onclick = () => { if (selected) { setScope(children.get(selected)?.length ? selected : nodes.get(selected)?.parent || graph.root); render(); } };
+$('#locate').onclick = () => { if (selected) { setScope(children.get(selected)?.length ? selected : projectModel.parents.get(selected) || graph.root); render(); } };
 $('#fit').onclick = () => { box = { x: 0, y: 0, w: 1100, h: 660 }; renderMap(); };
 $('#atlas').addEventListener('wheel', e => { e.preventDefault(); const ratio = Math.max(.2, Math.min(4, box.w / 1100 * (e.deltaY > 0 ? 1.12 : .89))), rect = $('#atlas').getBoundingClientRect(), fx = (e.clientX - rect.left) / rect.width, fy = (e.clientY - rect.top) / rect.height, w = 1100 * ratio, h = 660 * ratio; box = { x: box.x + (box.w - w) * fx, y: box.y + (box.h - h) * fy, w, h }; $('#atlas').setAttribute('viewBox', `${box.x} ${box.y} ${w} ${h}`); }, { passive: false });
 let pan;
@@ -571,7 +614,21 @@ if (layout.height && /^\d+(\.\d+)?px$/.test(layout.height)) sourceHeight(parseFl
 $('#source-toggle').textContent = layout.source ? '展开源码' : '收起源码';
 $('#source-toggle').setAttribute('aria-expanded', String(!layout.source));
 syncPanelControls();
-fetch('/api/project').then(r => { if (!r.ok) throw new Error(`服务响应 ${r.status}`); return r.json(); }).then(loadGraph).catch(error => { notify(`无法打开项目：${error.message}`, true); $('#project-name').textContent = '项目加载失败'; $('#project-bar').hidden = false; });
+if (offline) {
+  try {
+    loadGraph(offline.graph);
+    if (offline.scenario) loadScenario(offline.scenario);
+    $('.mode-label').textContent = '离线地图';
+    $('#scan-button').disabled = true; $('#index-allow').disabled = true; $('#project-path').disabled = true;
+    $('#demo-button').hidden = true; $('#map-export').hidden = true;
+    $('#scan-form').onsubmit = e => { e.preventDefault(); notify('扫描需要本地服务；离线可导入项目快照与场景。'); };
+    $('#project-bar p').textContent = '离线地图包含导出时的源码快照，可导入其他项目快照；扫描新目录需启动本地服务。';
+    notify('离线地图 · 源码与演示保存在此 HTML 中，可继续选择分支或导入场景。');
+  } catch (error) { notify(`无法打开离线地图：${error.message}`, true); }
+} else {
+  fetch('/api/project').then(r => { if (!r.ok) throw new Error(`服务响应 ${r.status}`); return r.json(); }).then(loadGraph).catch(error => { notify(`无法打开项目：${error.message}`, true); $('#project-name').textContent = '项目加载失败'; $('#project-bar').hidden = false; });
+}
+
 
 async function reconnectScan() {
   try {
@@ -591,4 +648,4 @@ async function reconnectScan() {
     poll();
   } catch { /* Normal page loading reports connection errors separately. */ }
 }
-reconnectScan();
+if (!offline) reconnectScan();
