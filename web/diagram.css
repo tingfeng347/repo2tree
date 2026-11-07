@@ -1,0 +1,59 @@
+/* Archify-inspired drawing grammar, mapped to the workspace's semantic palette. */
+#diagram-view{height:100%;min-height:0;display:flex;flex-direction:column}
+#diagram-view[hidden]{display:none}
+.diagram-heading{padding:18px 24px 12px;display:flex;justify-content:space-between;gap:16px;align-items:start}
+.diagram-heading h2{font:650 20px/1.4 var(--font);letter-spacing:-.02em;overflow-wrap:anywhere}
+.diagram-heading p{font-size:12px;color:var(--muted);margin-top:5px;max-width:70ch}
+.diagram-tools{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:0 24px 13px;border-bottom:1px solid var(--line)}
+.diagram-tools button{padding:4px 10px;font-size:12px}
+.diagram-tools output{font:12px var(--mono);min-width:42px;text-align:center}
+.diagram-tools .diagram-count{font-size:11px;color:var(--muted);margin-left:auto}
+.diagram-scroll{overflow:auto;flex:1;min-height:0;min-width:0;touch-action:pan-x pan-y;padding:18px;scrollbar-color:var(--scroll-thumb) var(--bg)}
+.diagram-scroll.panning{cursor:grabbing;user-select:none}
+.diagram-scroll:focus-visible{outline:2px solid var(--focus);outline-offset:-3px}
+.diagram-empty{padding:35px 30px;color:var(--muted);line-height:1.8}
+.diagram-empty h2{font-size:20px;color:var(--text);margin-bottom:12px}.diagram-empty button{margin-top:16px}
+.diagram-source-note{font-size:12px;color:var(--muted);line-height:1.8;margin-top:12px}
+#panel-symbol{overflow-wrap:anywhere}
+#panel-symbol h3{font:600 15px/1.6 var(--mono);margin:12px 0}
+#panel-symbol p{font-size:13px;line-height:1.8;margin:10px 0}
+#panel-symbol code{display:block;white-space:pre-wrap;font:12px/1.8 var(--mono);padding:12px;background:var(--panel2);border-radius:9px;margin-top:12px}
+#panel-symbol .symbol-targets{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+#panel-symbol .symbol-targets button{font-size:12px;white-space:normal;text-align:left}
+.code-diagram{display:block;max-width:none;flex:none;font-family:var(--font);color:var(--text)}
+.diagram-surface{fill:var(--panel);stroke:var(--line);stroke-width:1}
+.diagram-grid-dot{fill:var(--line)}
+.diagram-group>rect{fill:var(--panel2);fill-opacity:.55;stroke:var(--node-border);stroke-width:1;stroke-dasharray:5 5}
+.diagram-group-label{font:550 12px var(--mono);fill:var(--muted)}
+.diagram-node{cursor:pointer;outline:none}
+.diagram-shape{fill:var(--tone-bg,var(--panel));stroke:var(--tone-border,var(--node-border));stroke-width:1.3;filter:drop-shadow(0 3px 4px rgb(0 0 0 / .035))}
+.diagram-node:hover .diagram-shape,.diagram-node:focus-visible .diagram-shape{stroke:var(--focus);stroke-width:2}
+.diagram-node.selected .diagram-shape{stroke:var(--accent);stroke-width:2.3}
+.diagram-label{font-size:13px;font-weight:550;fill:var(--text);pointer-events:none}
+.diagram-caption{font-size:11px;fill:var(--muted);pointer-events:none}
+.diagram-icon{fill:none;stroke:var(--tone-text,var(--muted));stroke-width:1.15;stroke-linecap:round;stroke-linejoin:round}
+.diagram-port{fill:var(--panel);stroke:var(--tone-border,var(--node-border));stroke-width:1}
+.diagram-wire{fill:none;stroke:var(--edge-color);stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round}
+.diagram-connection.dashed .diagram-wire{stroke-dasharray:5 5}
+.diagram-arrow{fill:none;stroke:var(--edge-color);stroke-width:1.5;stroke-linejoin:round}
+.diagram-edge-mask{fill:var(--panel);fill-opacity:.97}
+.diagram-edge-label{font-size:11px;fill:var(--muted)}
+.diagram-lifeline{stroke:var(--node-border);stroke-width:1;stroke-dasharray:4 6}
+.diagram-activation{fill:var(--tone-call-bg);stroke:var(--tone-call-border);stroke-width:1}
+.diagram-note{cursor:pointer;outline:none}
+.diagram-note>rect{fill:var(--tone-bg,var(--panel2));stroke:var(--tone-border,var(--line));stroke-width:1}
+.diagram-note:hover>rect,.diagram-note:focus-visible>rect{stroke:var(--focus);stroke-width:2}
+.diagram-note-label{font-size:11px;fill:var(--text);pointer-events:none}
+.diagram-message{cursor:pointer;outline:none}.diagram-message:hover .diagram-wire,.diagram-message:focus-visible .diagram-wire{stroke:var(--focus);stroke-width:2}
+.diagram-event-dot{fill:var(--tone-call-text)}
+.diagram-index{font:10px var(--mono);fill:var(--muted)}
+.view-tabs{max-width:100%;overflow-x:auto;flex-shrink:1}
+.view-tabs button{flex-shrink:0}
+@media(max-width:620px){
+  .diagram-heading{padding:14px 14px 10px}.diagram-heading h2{font-size:18px}.diagram-heading p{font-size:11px}
+  .diagram-tools{padding:0 14px 10px;gap:5px}.diagram-tools button{font-size:11px;padding:4px 7px}.diagram-tools .diagram-count{width:100%;margin:2px 0 0}
+  .diagram-scroll{padding:10px}.map-head .view-tabs{justify-content:flex-start}
+}
+@media(prefers-reduced-motion:reduce){.diagram-node,.diagram-wire{transition:none}}
+
+.diagram-connection[data-tone=branch] .diagram-wire,.diagram-connection[data-tone=exception] .diagram-wire{stroke:var(--tone-text)}
