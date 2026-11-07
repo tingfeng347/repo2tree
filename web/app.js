@@ -1,6 +1,7 @@
 import { Player, allDecisions } from './engine.js';
 import { createProjectModel, functionKinds, walkFlow as walk } from './project-model.js';
 import { collectOfflineAssets, offlineHtml } from './offline.js';
+import { DiagramWorkspace, diagramViews } from './diagram-workspace.js';
 import { buildPresentation, eventNames, eventTone } from './presentation.js';
 import { highlightCode, sourceDocument, clearSyntaxCache } from './syntax.js';
 
@@ -18,6 +19,11 @@ let entryLimit = 80, mapPage = 0, sourceKey = '', saved = [], saveCoverage = new
 let playing = false, playToken = 0, resumePlayback = false, projectBusy = false;
 let box = { x: 0, y: 0, w: 1100, h: 660 };
 const svgNS = 'http://www.w3.org/2000/svg';
+const diagrams = new DiagramWorkspace($('#diagram-view'), {download:downloadFile, onSelect(detail) {
+  if (!nodes.has(detail.symbol)) return;
+  if (detail.seek != null) {pause(); resumePlayback=false; player.seek(Number(detail.seek));}
+  selected=detail.symbol; callsAnchor=selected; sourceKey=''; panel='symbol'; render();
+}});
 
 function notify(message, error = false) {
   $('#notice').hidden = !message; $('#notice').textContent = message;
@@ -49,6 +55,7 @@ function loadGraph(data) {
   const model = createProjectModel(data);
   pause(); resumePlayback = false; journeyDetails.clear(); view = 'journey'; clearSyntaxCache();
   graph = data; projectModel = model; player = new Player(graph);
+  diagrams.reset();
   ({nodes, children, edges:visualEdges} = model);
   scope = graph.root; selected = graph.root; callsAnchor = graph.root; mapPage = 0; sourceKey = ''; box = { x: 0, y: 0, w: 1100, h: 660 };
   const bp = localGet(projectKey() + ':breakpoints', {});
@@ -127,6 +134,7 @@ function revealSelection() {
 function selectNode(id, locate = false) {
   if (!nodes.has(id)) return;
   selected = id; callsAnchor = id; sourceKey = '';
+  if (diagrams.detail?.symbol !== id) diagrams.detail = null;
   if (locate) setScope(children.get(id)?.length ? id : projectModel.parents.get(id) || graph.root);
   render();
 }
@@ -217,11 +225,11 @@ function squarify(ids, rect) {
   if (row.length) flush(); return result;
 }
 function renderMap(model = buildPresentation(graph, player)) {
-  $('#atlas').toggleAttribute('hidden', !['map', 'calls'].includes(view)); $('#flow-view').hidden = view !== 'flow'; $('#journey-view').hidden = view !== 'journey';
-  $('.legend').hidden = view === 'journey';
-  $('#fit').disabled = !['map', 'calls'].includes(view);
+  $('#atlas').toggleAttribute('hidden', !['map', 'calls'].includes(view)); $('#diagram-view').hidden = !diagramViews.has(view); $('#journey-view').hidden = view !== 'journey';
+  $('.legend').hidden = !['map', 'calls'].includes(view);
+  $('#fit').disabled = view === 'journey';
+  if (diagramViews.has(view)) { diagrams.render({graph,project:projectModel,player,view,selected}); $('#map-page').innerHTML=''; return; }
   if (view === 'journey') { renderJourney(model); $('#map-page').innerHTML = ''; return; }
-  if (view === 'flow') { renderFlow(); $('#map-page').innerHTML = ''; return; }
   const svg = $('#atlas'); svg.replaceChildren();
   const scale = Math.max(.12, Math.min(svg.clientWidth / box.w, svg.clientHeight / box.h));
   svg.setAttribute('viewBox', `${box.x} ${box.y} ${box.w} ${box.h}`);
@@ -308,26 +316,19 @@ function renderMap(model = buildPresentation(graph, player)) {
   $('#map-page').innerHTML = pages > 1 ? `<button data-page="-1" ${mapPage === 0 ? 'disabled' : ''}>上一页</button><span>${mapPage + 1} / ${pages} · 共 ${count} 项</span><button data-page="1" ${mapPage === pages - 1 ? 'disabled' : ''}>下一页</button>` : `<span>${count} 项</span>`;
 }
 
-function renderFlow() {
-  const id = isFunction(selected) || graph.flows[selected] ? selected : player.current?.symbol || player.entry;
-  const n = nodes.get(id);
-  if (!n) { $('#flow-view').innerHTML = '<p class="empty">选择函数查看内部流程。</p>'; return; }
-  const format = ops => (ops || []).map(op => `<article class="flow-op ${player.current?.op === op.id ? 'active' : ''}" data-op="${escape(op.id)}"><header><span class="op-kind tone-badge" data-tone="${eventTone(op.kind)}">${escape(eventNames[op.kind] || op.kind)}</span><span class="op-line">L${op.line}</span><code class="syntax">${code(op.text.length > 220 ? op.text.slice(0, 220) + '…' : op.text, id)}</code></header>${op.targets?.length ? `<div class="flow-targets">${op.targets.map(t => `<button data-symbol="${escape(t.id)}">${escape(label(t.id))}</button> <span>${escape(t.origin)}${t.status === 'candidate' ? ' · 候选' : ''}</span>`).join('')}</div>` : op.kind === 'call' ? '<p class="flow-targets">调用目标未解析，保留边界</p>' : ''}${['conditionBody', 'body', 'incrementBody', 'elseBody', 'finallyBody'].map(k => op[k]?.length ? `<div class="flow-arms"><div class="flow-arm-label">${{ conditionBody: '循环条件／可迭代对象', body: '主体', incrementBody: '每轮更新', elseBody: '正常结束后', finallyBody: 'finally · 退出时仍执行' }[k]}</div>${format(op[k])}</div>` : '').join('')}${['arms', 'handlers'].map(k => (op[k] || []).map(a => `<div class="flow-arms"><div class="flow-arm-label">${escape(a.label)}</div>${format(a.body) || '<p class="muted">空分支，继续后续步骤</p>'}</div>`).join('')).join('')}</article>`).join('');
-  $('#flow-view').innerHTML = `<div class="flow-heading"><strong>${escape(label(id))}</strong><small>${escape(n.flowStatus)}</small></div>${Object.hasOwn(graph.flows, id) ? format(graph.flows[id]) || '<p class="empty">函数主体没有可展开步骤。</p>' : '<p class="empty">该语言或语法的控制流尚未适配。可在“调用关系”浏览全部已索引关系；本页不会按行号编造执行次序。</p>'}`;
-}
 function renderSource() {
   const n = nodes.get(selected), path = n?.path, source = graph.sources[path];
   $('#source-path').textContent = path ? `${path}${n.line ? ':' + n.line : ''}` : '选择一个函数查看源码';
   $('#start-selected').disabled = !isFunction(selected); $('#breakpoint-selected').disabled = !isFunction(selected);
   $('#breakpoint-selected').textContent = player.breakpoints.has(selected) ? '移除函数断点' : '设置函数断点';
   const e = player.current, activePath = nodes.get(e?.symbol)?.path;
-  const key = `${selected}:${activePath === path ? e?.line : ''}:${[...player.lineBreakpoints].join('|')}`;
+  const key = `${selected}:${diagrams.detail?.op || ''}:${activePath === path ? e?.line : ''}:${[...player.lineBreakpoints].join('|')}`;
   if (key === sourceKey) return; sourceKey = key;
   if (typeof source !== 'string') { $('#source-language').textContent = ''; $('#source-language').title = ''; $('#source').innerHTML = '<p class="empty">当前项没有内嵌源码。进入模块或选择函数查看。</p>'; return; }
   const sourceView = sourceDocument(source, path, n.language);
   $('#source-language').textContent = sourceView.highlighted || !sourceView.language ? sourceView.label : `${sourceView.label} · 纯文本`;
   $('#source-language').title = sourceView.note;
-  const lines = sourceView.lines, center = activePath === path && e?.line ? e.line : n.line || 1;
+  const lines = sourceView.lines, center = diagrams.operation(graph,selected)?.line || (activePath === path && e?.line ? e.line : n.line || 1);
   const offset = lines.length > 2000 ? Math.max(0, center - 200) : 0;
   const visible = lines.length > 2000 ? lines.slice(offset, offset + 500) : lines;
   $('#source').innerHTML = (lines.length > 2000 ? `<p class="muted">大文件按当前定位显示 L${offset + 1}–${offset + visible.length}，完整源码保留在项目快照中。</p>` : '') + visible.map((line, i) => {
@@ -384,10 +385,11 @@ function renderScenarios() {
 function render() {
   if (!graph) return;
   $('#breadcrumbs').innerHTML = ancestors(scope).reverse().map((id, i) => `${i ? '<span>/</span>' : ''}<button data-scope="${escape(id)}">${escape(nodes.get(id)?.name || id)}</button>`).join('');
-  $('#scope-description').textContent = view === 'journey' ? '跟随调用、分支与返回 · 在中央直接选择路径' : view === 'calls' ? '函数邻域 · 保留边的分析来源' : view === 'flow' ? '函数内步骤 · 分支按源码嵌套' : '双击进入 · 滚轮缩放 · 拖动画布';
+  $('#scope-description').textContent = view === 'journey' ? '跟随调用、分支与返回 · 在中央直接选择路径' : view === 'calls' ? '函数邻域 · 保留边的分析来源' : view === 'overview' ? '文件与类分组 · 点击查看说明' : view === 'sequence' ? '场景次序 · 点击消息回到事件' : view === 'flow' ? '函数内分支、循环与异常路径' : '双击进入 · 滚轮缩放 · 拖动画布';
   revealSelection();
   const model = buildPresentation(graph, player);
   renderMap(model); renderStep(model); renderSource();
+  if (panel === 'symbol') { diagrams.state={graph,project:projectModel,player,view,selected}; $('#panel-symbol').innerHTML=diagrams.description(); }
   if (panel === 'coverage') renderCoverage();
   if (panel === 'diagnostics') renderDiagnostics();
   for (const b of $$('[data-view]')) b.setAttribute('aria-selected', String(b.dataset.view === view));
@@ -451,7 +453,7 @@ document.addEventListener('click', e => {
   if (b.dataset.symbol) { e.preventDefault(); selectNode(b.dataset.symbol, !!b.closest('#tree')); }
   if (b.dataset.showSource && document.body.classList.contains('no-source')) toggleSource();
   if (b.dataset.scope) { setScope(b.dataset.scope); render(); }
-  if (b.dataset.view) { view = b.dataset.view; box = { x: 0, y: 0, w: 1100, h: 660 }; render(); }
+  if (b.dataset.view) { if(view!==b.dataset.view) diagrams.page=0; view = b.dataset.view; box = { x: 0, y: 0, w: 1100, h: 660 }; render(); }
   if (b.dataset.panel) { panel = b.dataset.panel; render(); }
   if (b.dataset.choice != null) choosePath(Number(b.dataset.choice));
   if (b.dataset.page) { mapPage += Number(b.dataset.page); renderMap(); }
@@ -492,10 +494,10 @@ $('#map-export').onclick = async () => {
   try {
     pause(); resumePlayback = false; render();
     const snapshot = graph, scenario = player.entry ? player.export(inputs(), $('#scenario-title').value.trim() || '未命名场景') : null;
-    const theme = document.documentElement.dataset.theme;
+    const theme = document.documentElement.dataset.theme, workspace = {view,selected,page:diagrams.page};
     button.disabled = true; button.textContent = '正在打包…';
     const resources = await collectOfflineAssets();
-    downloadFile('repo2tree-map.html', offlineHtml(snapshot, resources, {scenario, theme}), 'text/html;charset=utf-8');
+    downloadFile('repo2tree-map.html', offlineHtml(snapshot, resources, {scenario, theme, workspace}), 'text/html;charset=utf-8');
     notify('离线地图已导出，包含当前项目源码和演示场景；双击 HTML 即可打开。');
   } catch (error) { notify(error.message, true); }
   finally { button.disabled = false; button.textContent = '导出离线地图'; }
@@ -583,7 +585,7 @@ $('#source-toggle').onclick = toggleSource;
 let beforeFocus = null;
 $('#focus-toggle').onclick = () => { if (!beforeFocus) { beforeFocus = [document.body.classList.contains('no-left'), document.body.classList.contains('no-right'), document.body.classList.contains('no-source')]; document.body.classList.add('no-left', 'no-right', 'no-source'); $('#focus-toggle').textContent = '恢复布局'; } else { ['no-left', 'no-right', 'no-source'].forEach((cls, i) => document.body.classList.toggle(cls, beforeFocus[i])); beforeFocus = null; $('#focus-toggle').textContent = '专注'; } syncPanelControls(); saveLayout(); };
 $('#locate').onclick = () => { if (selected) { setScope(children.get(selected)?.length ? selected : projectModel.parents.get(selected) || graph.root); render(); } };
-$('#fit').onclick = () => { box = { x: 0, y: 0, w: 1100, h: 660 }; renderMap(); };
+$('#fit').onclick = () => { if(diagramViews.has(view)){diagrams.fit();return;} box = { x: 0, y: 0, w: 1100, h: 660 }; renderMap(); };
 $('#atlas').addEventListener('wheel', e => { e.preventDefault(); const ratio = Math.max(.2, Math.min(4, box.w / 1100 * (e.deltaY > 0 ? 1.12 : .89))), rect = $('#atlas').getBoundingClientRect(), fx = (e.clientX - rect.left) / rect.width, fy = (e.clientY - rect.top) / rect.height, w = 1100 * ratio, h = 660 * ratio; box = { x: box.x + (box.w - w) * fx, y: box.y + (box.h - h) * fy, w, h }; $('#atlas').setAttribute('viewBox', `${box.x} ${box.y} ${w} ${h}`); }, { passive: false });
 let pan;
 $('#atlas').addEventListener('pointerdown', e => { if (e.button !== 0 || e.target.closest('[data-symbol]')) return; pan = { x: e.clientX, y: e.clientY, box: { ...box } }; $('#atlas').setPointerCapture(e.pointerId); $('#atlas').classList.add('dragging'); });
@@ -618,6 +620,11 @@ if (offline) {
   try {
     loadGraph(offline.graph);
     if (offline.scenario) loadScenario(offline.scenario);
+    if (offline.workspace) {
+      if (['journey','overview','sequence','map','calls','flow'].includes(offline.workspace.view)) view=offline.workspace.view;
+      if (nodes.has(offline.workspace.selected)) selected=offline.workspace.selected;
+      diagrams.page=Math.max(0,Number(offline.workspace.page)||0); render();
+    }
     $('.mode-label').textContent = '离线地图';
     $('#scan-button').disabled = true; $('#index-allow').disabled = true; $('#project-path').disabled = true;
     $('#demo-button').hidden = true; $('#map-export').hidden = true;

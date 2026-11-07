@@ -1,6 +1,6 @@
 // Package the existing workspace, rather than maintaining a second viewer.
 export const offlineAssets = ['/', '/style.css', '/theme.js', '/app.js', '/engine.js',
-  '/presentation.js', '/syntax.js', '/vendor/highlight.js', '/project-model.js', '/offline.js', '/vendor/highlight.LICENSE', '/fonts/OFL.txt', '/fonts/AlbertSans.ttf'];
+  '/diagram-workspace.js', '/diagram-model.js', '/diagram-svg.js', '/diagram.css', '/presentation.js', '/syntax.js', '/vendor/highlight.js', '/project-model.js', '/offline.js', '/vendor/highlight.LICENSE', '/fonts/OFL.txt', '/fonts/AlbertSans.ttf'];
 
 const jsonScript = value => JSON.stringify(value).replace(/</g, '\\u003c');
 const base64 = text => {
@@ -22,7 +22,7 @@ export async function collectOfflineAssets(fetchResource = fetch) {
   })));
 }
 
-export function offlineHtml(graph, resources, {scenario = null, theme = 'light'} = {}) {
+export function offlineHtml(graph, resources, {scenario = null, theme = 'light', workspace = null} = {}) {
   for (const path of offlineAssets) if (typeof resources[path] !== 'string' || !resources[path]) throw new Error(`缺少离线资源：${path}`);
   const imports = {};
   for (const path of offlineAssets.filter(path => path.endsWith('.js'))) {
@@ -35,11 +35,12 @@ export function offlineHtml(graph, resources, {scenario = null, theme = 'light'}
     imports['repo2tree' + path] = 'data:text/javascript;base64,' + base64(source);
   }
   const policy = "default-src 'none'; script-src 'unsafe-inline' data:; style-src 'unsafe-inline'; font-src data:; img-src data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'";
-  const boot = `<meta http-equiv="Content-Security-Policy" content="${policy}"><script id="repo2tree-data" type="application/json">${jsonScript({graph, scenario, theme})}</script><script type="application/json" id="repo2tree-licenses">${jsonScript({highlight:resources['/vendor/highlight.LICENSE'], font:resources['/fonts/OFL.txt']})}</script>`;
+  const boot = `<meta http-equiv="Content-Security-Policy" content="${policy}"><script id="repo2tree-data" type="application/json">${jsonScript({graph, scenario, theme, ...(workspace ? {workspace} : {})})}</script><script type="application/json" id="repo2tree-licenses">${jsonScript({highlight:resources['/vendor/highlight.LICENSE'], font:resources['/fonts/OFL.txt']})}</script>`;
   const style = resources['/style.css'].replace("url('/fonts/AlbertSans.ttf')", `url('data:font/ttf;base64,${resources['/fonts/AlbertSans.ttf']}')`);
   return resources['/']
     .replace('<script src="/theme.js"></script>', () => `${boot}<script>${resources['/theme.js']}</script>`)
     .replace('<link rel="stylesheet" href="/style.css">', () => `<style>${style}</style>`)
+    .replace('<link id="diagram-styles" rel="stylesheet" href="/diagram.css">', () => `<style id="diagram-styles">${resources['/diagram.css']}</style>`)
     .replace('<script type="module" src="/app.js"></script>', () => `<script type="importmap">${jsonScript({imports})}</script><script type="module">import 'repo2tree/app.js';</script>`)
     .replace('href="/"', 'href="#"');
 }

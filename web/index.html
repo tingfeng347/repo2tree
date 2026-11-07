@@ -8,6 +8,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2026%2026%22%20fill%3D%22none%22%20stroke%3D%22%23262626%22%20stroke-width%3D%222%22%3E%3Crect%20x%3D%222%22%20y%3D%223%22%20width%3D%228%22%20height%3D%228%22%20rx%3D%222%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%2215%22%20width%3D%228%22%20height%3D%228%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M6%2011v8h10M10%207h10v8%22%2F%3E%3C%2Fsvg%3E">
   <script src="/theme.js"></script>
   <link rel="stylesheet" href="/style.css">
+  <link id="diagram-styles" rel="stylesheet" href="/diagram.css">
   <script type="module" src="/app.js"></script>
 </head>
 <body>
@@ -68,13 +69,13 @@
     <section class="center-pane" aria-label="代码地图">
       <div class="map-head">
         <nav id="breadcrumbs" aria-label="当前层级"></nav>
-        <div class="view-tabs" role="tablist" aria-label="地图视图"><button data-view="journey" role="tab" aria-selected="true">路径演示</button><button data-view="map" role="tab" aria-selected="false">结构地图</button><button data-view="calls" role="tab" aria-selected="false">调用关系</button><button data-view="flow" role="tab" aria-selected="false">函数流程</button></div>
+        <div class="view-tabs" role="tablist" aria-label="地图视图"><button data-view="journey" role="tab" aria-selected="true">路径演示</button><button data-view="overview" role="tab" aria-selected="false">全景图</button><button data-view="sequence" role="tab" aria-selected="false">时序图</button><button data-view="map" role="tab" aria-selected="false">结构地图</button><button data-view="calls" role="tab" aria-selected="false">调用关系</button><button data-view="flow" role="tab" aria-selected="false">流程图</button></div>
       </div>
       <div class="map-tools"><span id="scope-description"></span><label class="check"><input id="follow" type="checkbox" checked>跟随当前步骤</label><button id="locate">定位所选</button><button id="fit">适应画布</button></div>
       <div class="stage" id="stage">
         <div id="journey-view" aria-label="当前路径演示"></div>
         <svg id="atlas" viewBox="0 0 1100 660" role="group" aria-label="可缩放代码地图"></svg>
-        <div id="flow-view" hidden></div>
+        <div id="diagram-view" hidden></div>
         <div class="legend"><span><i class="key active"></i>当前调用</span><span><i class="key visited"></i>本场景经过</span><span><i class="key candidate"></i>候选关系</span><span><i class="key breakpoint"></i>断点</span></div>
         <div id="map-page" class="map-page"></div>
       </div>
@@ -92,7 +93,7 @@
       <div class="pane-content">
         <div class="pane-heading"><h2>当前演示</h2><span id="status" class="status">准备</span></div>
         <div class="session-entry" id="session-entry">选择 API、前端或任意函数作为入口</div>
-        <div class="inspector-tabs" role="tablist" aria-label="步骤信息"><button data-panel="step" role="tab" aria-selected="true">步骤</button><button data-panel="stack" role="tab" aria-selected="false">调用栈</button><button data-panel="coverage" role="tab" aria-selected="false">探索率</button><button data-panel="diagnostics" role="tab" aria-selected="false">分析缺口</button></div>
+        <div class="inspector-tabs" role="tablist" aria-label="步骤信息"><button data-panel="step" role="tab" aria-selected="true">步骤</button><button data-panel="symbol" role="tab" aria-selected="false">说明</button><button data-panel="stack" role="tab" aria-selected="false">调用栈</button><button data-panel="coverage" role="tab" aria-selected="false">探索率</button><button data-panel="diagnostics" role="tab" aria-selected="false">分析缺口</button></div>
         <section id="panel-step" class="inspector-panel">
           <div id="current-step" class="current-step"></div>
           <div id="choices" class="choices"></div>
@@ -100,6 +101,7 @@
           <details class="input-section"><summary>场景备注</summary><label for="scenario-input">JSON 备注，表达式不会求值</label><textarea id="scenario-input" spellcheck="false" rows="5">{"sku": "book", "quantity": 2}</textarea><p>输入与分支选择的可行性未经验证；本页展示的是假设路径。</p></details>
           <details class="help-section"><summary>演示约定与快捷键</summary><p>F11 单步 · F10 跳过 · Shift+F11 跳出函数 · F8 播放／暂停 · Esc 暂停 · [ / ] 折叠面板 · F 专注。双击矩形进入模块或类；函数是结构图最小单元。</p><p>每轮循环可继续或退出。递归达到展开边界时再次询问。函数断点、源码行断点在跳过、跳出时同样生效。</p><label for="max-depth">递归询问深度</label><select id="max-depth"><option>8</option><option selected>16</option><option>32</option><option>64</option></select></details>
         </section>
+        <section id="panel-symbol" class="inspector-panel" hidden></section>
         <section id="panel-stack" class="inspector-panel" hidden></section>
         <section id="panel-coverage" class="inspector-panel" hidden></section>
         <section id="panel-diagnostics" class="inspector-panel" hidden></section>

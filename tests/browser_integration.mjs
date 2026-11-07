@@ -39,7 +39,7 @@ try {
     const sourceHidden = $('.source-panel').getBoundingClientRect().height === 0;
     $('#focus-toggle').click(); const focus = width() > before + 350; $('#focus-toggle').click();
     $('[data-view="calls"]').click(); const callNodes = $('#atlas').querySelectorAll('[data-symbol]').length;
-    $('[data-view="flow"]').click(); const flowVisible = !$('#flow-view').hidden && $('#flow-view').textContent.includes('onClick') && $('#atlas').getBoundingClientRect().height === 0;
+    $('[data-view="flow"]').click(); const flowVisible = !$('#diagram-view').hidden && $('#diagram-view').textContent.includes('onClick') && $('#atlas').getBoundingClientRect().height === 0;
     $('[data-view="map"]').click();
     return { collapsed, sourceHidden, focus, callNodes, flowVisible };
   })()`);
@@ -114,7 +114,7 @@ try {
   const mobile = await evaluate(`({overflow:document.documentElement.scrollWidth>innerWidth, main:document.querySelector('main').getBoundingClientRect().width, viewport:innerWidth})`);
   assert.equal(mobile.overflow, false, JSON.stringify(mobile));
   assert(await evaluate(`document.querySelector('#play').getBoundingClientRect().right <= innerWidth`));
-  assert(await evaluate(`document.querySelector('#atlas').getBoundingClientRect().height === 0 && document.querySelector('#flow-view').getBoundingClientRect().height > 100`));
+  assert(await evaluate(`document.querySelector('#atlas').getBoundingClientRect().height === 0 && document.querySelector('#diagram-view').getBoundingClientRect().height > 100`));
   if (shots) { const screen = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true }); writeFileSync(join(shots, 'mobile.png'), Buffer.from(screen.data, 'base64')); }
   await evaluate(`document.querySelector('#right-restore').click()`);
   assert(await evaluate(`document.querySelector('.right-pane .pane-content').getBoundingClientRect().width > 300`));
